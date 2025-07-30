@@ -93,7 +93,8 @@ public class DrawPathMovement : MonoBehaviour
         {
             isDrawing = false;
             currentPointIndex = 0;
-            canMove = true; // Baru boleh gerak setelah selesai menggambar
+            // canMove = true; // Baru boleh gerak setelah selesai menggambar
+           isSelected = false; // Tidak lagi terpilih setelah selesai menggambar
         }
     }
 
@@ -126,7 +127,7 @@ public class DrawPathMovement : MonoBehaviour
     void GetCamera()
     {
         cinemachineCamera.Target.TrackingTarget = transform;
-        
+
         foreach (var player in players)
         {
             if (player != this)
@@ -137,4 +138,5 @@ public class DrawPathMovement : MonoBehaviour
     }
 
     public void SetIsSelected(bool selected) { isSelected = selected; }
+    public void SetCanMove(bool selected) { canMove = selected; }
 }
