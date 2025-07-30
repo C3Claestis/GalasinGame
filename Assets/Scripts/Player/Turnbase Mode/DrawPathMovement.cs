@@ -22,7 +22,7 @@ public class DrawPathMovement : MonoBehaviour
 
     void Awake()
     {
-        if (cinemachineCamera == null) cinemachineCamera = FindAnyObjectByType<CinemachineCamera>();
+        if (cinemachineCamera == null) cinemachineCamera = GameObject.Find("Camera Player").GetComponent<CinemachineCamera>();
 
         if (players == null || players.Length == 0)
         {
@@ -59,8 +59,6 @@ public class DrawPathMovement : MonoBehaviour
             {
                 if (hit.transform == transform) // klik karakter
                 {
-                    GetCamera();
-                    isSelected = true;
                     pathPoints.Clear();
                     lineRenderer.positionCount = 0;
                 }
@@ -93,8 +91,7 @@ public class DrawPathMovement : MonoBehaviour
         {
             isDrawing = false;
             currentPointIndex = 0;
-            // canMove = true; // Baru boleh gerak setelah selesai menggambar
-           isSelected = false; // Tidak lagi terpilih setelah selesai menggambar
+            isSelected = false; // Tidak lagi terpilih setelah selesai menggambar
         }
     }
 
@@ -102,6 +99,24 @@ public class DrawPathMovement : MonoBehaviour
     {
         if (pathPoints.Count == 0 || currentPointIndex >= pathPoints.Count)
             return;
+
+        // Hitung total panjang path
+        float totalLength = 0f;
+        for (int i = 1; i < pathPoints.Count; i++)
+        {
+            totalLength += Vector3.Distance(pathPoints[i - 1], pathPoints[i]);
+        }
+
+        // Jika path terlalu pendek (< 0.05), jangan bergerak
+        if (totalLength < 0.05f)
+        {
+            pathPoints.Clear();
+            lineRenderer.positionCount = 0;
+            canMove = false;
+            isDrawing = false;
+            isSelected = false;
+            return;
+        }
 
         Vector3 target = pathPoints[currentPointIndex];
         target.y = transform.position.y;
@@ -120,23 +135,20 @@ public class DrawPathMovement : MonoBehaviour
                 pathPoints.Clear();
                 lineRenderer.positionCount = 0;
                 canMove = false;
+                isDrawing = false;
+                isSelected = false;
             }
         }
     }
 
-    void GetCamera()
+    public void SetIsSelected(bool selected)
     {
-        cinemachineCamera.Target.TrackingTarget = transform;
-
-        foreach (var player in players)
+        isSelected = selected;
+        if (isSelected)
         {
-            if (player != this)
-            {
-                player.SetIsSelected(false);
-            }
+            cinemachineCamera.Target.TrackingTarget = transform;
         }
     }
 
-    public void SetIsSelected(bool selected) { isSelected = selected; }
     public void SetCanMove(bool selected) { canMove = selected; }
 }
