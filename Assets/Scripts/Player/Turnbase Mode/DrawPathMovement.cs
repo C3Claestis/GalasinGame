@@ -10,7 +10,9 @@ public class DrawPathMovement : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
 
     [SerializeField] CinemachineCamera cinemachineCamera;
+    [SerializeField] DisplayPlayerManager displayPlayerManagers;
     [SerializeField] DrawPathMovement[] players;
+    
 
     private bool isSelected = false;
     private bool isDrawing = false;
@@ -19,6 +21,8 @@ public class DrawPathMovement : MonoBehaviour
     private List<Vector3> pathPoints = new List<Vector3>();
     private LineRenderer lineRenderer;
     private int currentPointIndex = 0;
+
+    private Rigidbody rb;
 
     void Awake()
     {
@@ -30,10 +34,17 @@ public class DrawPathMovement : MonoBehaviour
                 .Where(p => p != this)
                 .ToArray();
         }
+
+        if (displayPlayerManagers == null)
+        {
+            displayPlayerManagers = FindObjectsByType<DisplayPlayerManager>(FindObjectsSortMode.None)
+                .FirstOrDefault();
+        }
     }
 
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
 
@@ -48,6 +59,17 @@ public class DrawPathMovement : MonoBehaviour
         // Karakter hanya bergerak jika selesai menggambar dan diperbolehkan
         if (canMove)
             MoveAlongPath();
+
+        // Freeze posisi Y jika x di luar batas
+        if (transform.position.x > 12f || transform.position.x < -12f)
+        {
+            rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
+            
+        }
+        else
+        {
+            rb.constraints |= RigidbodyConstraints.FreezePositionY;
+        }
     }
 
     void HandleMouseInput()
@@ -137,6 +159,11 @@ public class DrawPathMovement : MonoBehaviour
                 canMove = false;
                 isDrawing = false;
                 isSelected = false;
+                foreach (var btn in displayPlayerManagers.GetButtons())
+                {
+                    if (btn != null)
+                        btn.interactable = true;
+                }
             }
         }
     }
@@ -151,4 +178,5 @@ public class DrawPathMovement : MonoBehaviour
     }
 
     public void SetCanMove(bool selected) { canMove = selected; }
+    public bool GetCanMove() { return canMove; }
 }

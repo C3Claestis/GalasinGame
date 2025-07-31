@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class DisplayPlayerManager : MonoBehaviour
 {
+    [SerializeField] private GoThroughtFunction goThroughtFunction;
     [SerializeField] private DrawPathMovement[] players;
     [SerializeField] private Button[] btnDisplayPlayer;
 
@@ -14,6 +15,11 @@ public class DisplayPlayerManager : MonoBehaviour
         if (players == null || players.Length == 0)
         {
             players = FindObjectsByType<DrawPathMovement>(FindObjectsSortMode.None);
+        }
+
+        if (goThroughtFunction == null)
+        {
+            goThroughtFunction = FindAnyObjectByType<GoThroughtFunction>();
         }
 
         TakeImageDisplay();
@@ -74,8 +80,18 @@ public class DisplayPlayerManager : MonoBehaviour
             if (btnDisplayPlayer[index] != null && players[index] != null)
             {
                 btnDisplayPlayer[index].onClick.RemoveAllListeners();
-                btnDisplayPlayer[index].onClick.AddListener(() => players[index].SetIsSelected(true));
+                btnDisplayPlayer[index].onClick.AddListener(() =>
+                {
+                    players[index].SetIsSelected(true);
+                    btnDisplayPlayer[index].interactable = false; // Button jadi tidak bisa diklik lagi
+                    goThroughtFunction.CheckAllButtonsAndActivateGoThrought();
+                });
             }
         }
+    }
+    
+    public Button[] GetButtons()
+    {
+        return btnDisplayPlayer;
     }
 }
