@@ -3,9 +3,21 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] DrawPathMovement[] players;
-    [SerializeField] float moveSpeed = 3f;
+
+    [HideInInspector] public float moveSpeed;
+
+    [HideInInspector] public float maxRangeX; // Batas gerak X untuk enemy
+    [HideInInspector] public float minRangeX; // Batas gerak X untuk enemy
+    [HideInInspector] public float maxRangeSodor; // Batas gerak X untuk enemy
+    [HideInInspector] public float minRangeSodor; // Batas gerak X untuk enemy
+
+    [Header("Type")]
+    [HideInInspector] public bool isType; // Tambahkan ini
+
+    private GameManager gameManager;
     private DrawPathMovement nearestPlayer;
-    private bool isEnemyTurn = false;
+
+    private bool canMove = true;
 
     private void Awake()
     {
@@ -13,18 +25,25 @@ public class Enemy : MonoBehaviour
         {
             players = FindObjectsByType<DrawPathMovement>(FindObjectsSortMode.None);
         }
+
+        if (gameManager == null)
+        {
+            gameManager = FindAnyObjectByType<GameManager>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isEnemyTurn)
+        if (canMove)
         {
-            MoveToNearestPlayerX();
-            // Cek jika sudah sampai target X, matikan giliran
-            if (nearestPlayer != null && Mathf.Abs(transform.position.x - nearestPlayer.transform.position.x) < 0.01f)
+            if (isType)
             {
-                isEnemyTurn = false;                
+                MoveToNearestPlayerSodor();
+            }
+            else
+            {
+                MoveToNearestPlayerX();
             }
         }
     }
@@ -37,15 +56,21 @@ public class Enemy : MonoBehaviour
         FindNearestPlayer();
         if (nearestPlayer == null) return;
 
-        float clampedX = Mathf.Clamp(nearestPlayer.transform.position.x, -11.5f, 11.5f);
+        float clampedX = Mathf.Clamp(nearestPlayer.transform.position.x, minRangeX, maxRangeX);
         Vector3 targetPos = new Vector3(clampedX, transform.position.y, transform.position.z);
         transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
     }
 
-    public void MoveToRandomX()
+    /// <summary>
+    /// Gerak ke sumbu Z (Sodor)
+    /// </summary>
+    public void MoveToNearestPlayerSodor()
     {
-        float randomX = Random.Range(-11.5f, 11.5f); // Ganti range sesuai kebutuhan
-        Vector3 targetPos = new Vector3(randomX, transform.position.y, transform.position.z);
+        FindNearestPlayer();
+        if (nearestPlayer == null) return;
+
+        float clampedZ = Mathf.Clamp(nearestPlayer.transform.position.z, minRangeSodor, maxRangeSodor);
+        Vector3 targetPos = new Vector3(transform.position.x, transform.position.y, clampedZ);
         transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
     }
 
@@ -78,10 +103,17 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Fungsi untuk mengaktifkan giliran Enemy dari turn manager
-    public void SetStartEnemyTurn(bool value)
+    private void OnTriggerEnter(Collider other)
     {
-        FindNearestPlayer();
-        isEnemyTurn = value;
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("Hit " + other.name);
+            gameManager.UpdateDefenderCatch(1);
+        }
+    }
+
+    public void SetCanMove(bool canMove)
+    {
+        this.canMove = canMove;
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using UnityEngine.EventSystems; // Tambahkan di atas
 
 [RequireComponent(typeof(LineRenderer))]
 public class DrawPathMovement : MonoBehaviour
@@ -10,9 +11,7 @@ public class DrawPathMovement : MonoBehaviour
     [SerializeField] float moveSpeed = 5f;
 
     [SerializeField] CinemachineCamera cinemachineCamera;
-    [SerializeField] DisplayPlayerManager displayPlayerManagers;
     [SerializeField] DrawPathMovement[] players;
-    
 
     private bool isSelected = false;
     private bool isDrawing = false;
@@ -23,6 +22,7 @@ public class DrawPathMovement : MonoBehaviour
     private int currentPointIndex = 0;
 
     private Rigidbody rb;
+    private Vector3 startPoint;
 
     void Awake()
     {
@@ -34,12 +34,6 @@ public class DrawPathMovement : MonoBehaviour
                 .Where(p => p != this)
                 .ToArray();
         }
-
-        if (displayPlayerManagers == null)
-        {
-            displayPlayerManagers = FindObjectsByType<DisplayPlayerManager>(FindObjectsSortMode.None)
-                .FirstOrDefault();
-        }
     }
 
     void Start()
@@ -50,6 +44,8 @@ public class DrawPathMovement : MonoBehaviour
 
         if (mainCamera == null)
             mainCamera = Camera.main;
+
+        startPoint = transform.position;
     }
 
     void Update()
@@ -64,7 +60,7 @@ public class DrawPathMovement : MonoBehaviour
         if (transform.position.x > 12f || transform.position.x < -12f)
         {
             rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
-            
+
         }
         else
         {
@@ -74,6 +70,10 @@ public class DrawPathMovement : MonoBehaviour
 
     void HandleMouseInput()
     {
+        // Cegah raycast jika pointer di atas UI
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -159,13 +159,22 @@ public class DrawPathMovement : MonoBehaviour
                 canMove = false;
                 isDrawing = false;
                 isSelected = false;
-                foreach (var btn in displayPlayerManagers.GetButtons())
-                {
-                    if (btn != null)
-                        btn.interactable = true;
-                }
             }
         }
+    }
+
+    public void ResetPlayer()
+    {
+        // Pindahkan object ke titik awal
+        transform.position = startPoint;
+        gameObject.name = "Player";
+        pathPoints.Clear();
+        lineRenderer.positionCount = 0;
+        currentPointIndex = 0;
+        isDrawing = false;
+        isSelected = false;
+        canMove = false;
+        rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
     public void SetIsSelected(bool selected)
@@ -179,4 +188,5 @@ public class DrawPathMovement : MonoBehaviour
 
     public void SetCanMove(bool selected) { canMove = selected; }
     public bool GetCanMove() { return canMove; }
+
 }

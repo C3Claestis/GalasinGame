@@ -82,16 +82,46 @@ public class DisplayPlayerManager : MonoBehaviour
                 btnDisplayPlayer[index].onClick.RemoveAllListeners();
                 btnDisplayPlayer[index].onClick.AddListener(() =>
                 {
+                    // Set semua player selain index ini menjadi tidak selected
+                    for (int j = 0; j < players.Length; j++)
+                    {
+                        if (j != index && players[j] != null)
+                            players[j].SetIsSelected(false);
+                    }
                     players[index].SetIsSelected(true);
+                    players[index].SetCanMove(false);
                     btnDisplayPlayer[index].interactable = false; // Button jadi tidak bisa diklik lagi
                     goThroughtFunction.CheckAllButtonsAndActivateGoThrought();
                 });
             }
         }
-    }
-    
-    public Button[] GetButtons()
+    }    
+
+    public void ReactivateButtonsIfAllPlayersCanMoveWithDelay()
     {
-        return btnDisplayPlayer;
+        bool allCanMove = true;
+        foreach (var player in players)
+        {
+            if (player == null || !player.GetCanMove())
+            {
+                allCanMove = false;
+                break;
+            }
+        }
+
+        if (allCanMove)
+        {
+            StartCoroutine(ReactivateButtonsCoroutine());
+        }
+    }
+
+    private System.Collections.IEnumerator ReactivateButtonsCoroutine()
+    {
+        yield return new WaitForSeconds(5f);
+        foreach (var btn in btnDisplayPlayer)
+        {
+            if (btn != null)
+                btn.interactable = true;
+        }
     }
 }

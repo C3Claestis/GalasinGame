@@ -6,9 +6,9 @@ public class GoThroughtFunction : MonoBehaviour
 {    
     [SerializeField] private CinemachineCamera cinemachineCamera;
     [SerializeField] private Transform displayPlayerManager;
-    [SerializeField] private GameObject btnGoThrought;
-    [SerializeField] private DrawPathMovement[] players;    
-    [SerializeField] private Enemy[] enemies;
+    [SerializeField] private DisplayPlayerManager display;
+    [SerializeField] private Button btnGoThrought;
+    [SerializeField] private DrawPathMovement[] players;
 
     private void Awake()
     {
@@ -17,17 +17,17 @@ public class GoThroughtFunction : MonoBehaviour
             players = FindObjectsByType<DrawPathMovement>(FindObjectsSortMode.None);
         }
 
-        if (enemies == null || enemies.Length == 0)
-        {
-            enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
-        }
-
         if (displayPlayerManager == null)
         {
-            displayPlayerManager = GameObject.Find("DisplayPlayer").GetComponent<Transform>();
+            displayPlayerManager = GameObject.Find("DisplayPlayer").transform;
+        }
+
+        if (display == null)
+        {
+            display = FindAnyObjectByType<DisplayPlayerManager>();
         }
     }
-    
+
     public void GoThroughAllPlayers()
     {
         foreach (var player in players)
@@ -35,33 +35,28 @@ public class GoThroughtFunction : MonoBehaviour
             if (player != null)
             {
                 player.SetCanMove(true);
-            }
-        }
-
-        foreach (var enemy in enemies)
-        {
-            if (enemy != null)
-            {
-                enemy.SetStartEnemyTurn(true);
+                player.SetIsSelected(false);
             }
         }
 
         cinemachineCamera.Target.TrackingTarget = transform;
+
+        display.ReactivateButtonsIfAllPlayersCanMoveWithDelay();
     }
 
     public void CheckAllButtonsAndActivateGoThrought()
     {
-        bool allInactive = true;
+        bool allDisabled = true;
         foreach (Transform child in displayPlayerManager)
         {
             Button btn = child.GetComponent<Button>();
             if (btn != null && btn.interactable)
             {
-                allInactive = false;
+                allDisabled = false;
                 break;
             }
         }
 
-        btnGoThrought.SetActive(allInactive);
+        btnGoThrought.interactable = allDisabled;
     }
 }
