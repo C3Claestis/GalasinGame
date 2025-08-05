@@ -2,17 +2,15 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] DrawPathMovement[] players;
+    public float moveSpeed;
+    public float maxRangeX; // Batas gerak X untuk enemy
+    public float minRangeX; // Batas gerak X untuk enemy
+    public float maxRangeSodor; // Batas gerak X untuk enemy
+    public float minRangeSodor; // Batas gerak X untuk enemy
+    public bool isType; // Tambahkan ini
 
-    [HideInInspector] public float moveSpeed;
-
-    [HideInInspector] public float maxRangeX; // Batas gerak X untuk enemy
-    [HideInInspector] public float minRangeX; // Batas gerak X untuk enemy
-    [HideInInspector] public float maxRangeSodor; // Batas gerak X untuk enemy
-    [HideInInspector] public float minRangeSodor; // Batas gerak X untuk enemy
-
-    [Header("Type")]
-    [HideInInspector] public bool isType; // Tambahkan ini
+    private DrawPathMovement[] players;
+    private Animator anim;
 
     private GameManager gameManager;
     private DrawPathMovement nearestPlayer;
@@ -29,6 +27,11 @@ public class Enemy : MonoBehaviour
         if (gameManager == null)
         {
             gameManager = FindAnyObjectByType<GameManager>();
+        }
+
+        if(anim == null)
+        {
+            anim = transform.GetComponentInChildren<Animator>();
         }
     }
 

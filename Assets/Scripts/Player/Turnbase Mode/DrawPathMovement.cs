@@ -186,6 +186,8 @@ public class DrawPathMovement : MonoBehaviour
         }
     }
 
+    public void SetIsDrawing(bool drawing) { isDrawing = drawing; }
+
     public void SetCanMove(bool selected) { canMove = selected; }
     public bool GetCanMove() { return canMove; }
 

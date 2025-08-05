@@ -36,6 +36,7 @@ public class GoThroughtFunction : MonoBehaviour
             {
                 player.SetCanMove(true);
                 player.SetIsSelected(false);
+                player.SetIsDrawing(false);
             }
         }
 

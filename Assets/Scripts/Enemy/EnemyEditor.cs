@@ -4,40 +4,53 @@ using UnityEngine;
 [CustomEditor(typeof(Enemy))]
 public class EnemyEditor : Editor
 {
+    SerializedProperty moveSpeedProp;
+    SerializedProperty isTypeProp;
+    SerializedProperty maxRangeXProp;
+    SerializedProperty minRangeXProp;
+    SerializedProperty maxRangeSodorProp;
+    SerializedProperty minRangeSodorProp;
+
+    private void OnEnable()
+    {
+        moveSpeedProp = serializedObject.FindProperty("moveSpeed");
+        isTypeProp = serializedObject.FindProperty("isType");
+        maxRangeXProp = serializedObject.FindProperty("maxRangeX");
+        minRangeXProp = serializedObject.FindProperty("minRangeX");
+        maxRangeSodorProp = serializedObject.FindProperty("maxRangeSodor");
+        minRangeSodorProp = serializedObject.FindProperty("minRangeSodor");
+    }
+
     public override void OnInspectorGUI()
     {
+        serializedObject.Update();
+
         Enemy enemy = (Enemy)target;
 
-        // Draw default fields except isType, maxRangeX, minRangeX, maxRangeSodor, minRangeSodor
-        DrawPropertiesExcluding(serializedObject, "isType", "maxRangeX", "minRangeX", "maxRangeSodor", "minRangeSodor", "moveSpeed");
+        // Show move speed
+        EditorGUILayout.PropertyField(moveSpeedProp);
 
-        enemy.moveSpeed = EditorGUILayout.FloatField("Move Spedd", enemy.moveSpeed);
-        
         EditorGUILayout.Space(10);
-        // Radio button group
         GUILayout.Label("Mode", EditorStyles.boldLabel);
+
         EditorGUILayout.BeginHorizontal();
-
-        int mode = enemy.isType ? 1 : 0;
+        int mode = isTypeProp.boolValue ? 1 : 0;
         mode = GUILayout.Toolbar(mode, new string[] { "Gobak", "Sodor" }, "Radio");
-
-        enemy.isType = (mode == 1);
-
+        isTypeProp.boolValue = (mode == 1);
         EditorGUILayout.EndHorizontal();
 
-        // Show fields based on mode
-        if (!enemy.isType)
+        // Show relevant ranges
+        if (!isTypeProp.boolValue)
         {
-            enemy.maxRangeX = EditorGUILayout.FloatField("Max Range X", enemy.maxRangeX);
-            enemy.minRangeX = EditorGUILayout.FloatField("Min Range X", enemy.minRangeX);
+            EditorGUILayout.PropertyField(maxRangeXProp);
+            EditorGUILayout.PropertyField(minRangeXProp);
         }
         else
         {
-            enemy.maxRangeSodor = EditorGUILayout.FloatField("Max Range Sodor", enemy.maxRangeSodor);
-            enemy.minRangeSodor = EditorGUILayout.FloatField("Min Range Sodor", enemy.minRangeSodor);
+            EditorGUILayout.PropertyField(maxRangeSodorProp);
+            EditorGUILayout.PropertyField(minRangeSodorProp);
         }
 
-        if (GUI.changed)
-            EditorUtility.SetDirty(enemy);
+        serializedObject.ApplyModifiedProperties();
     }
 }
