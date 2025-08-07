@@ -7,32 +7,39 @@ using UnityEngine.EventSystems; // Tambahkan di atas
 [RequireComponent(typeof(LineRenderer))]
 public class DrawPathMovement : MonoBehaviour
 {
-    [SerializeField] Camera mainCamera;
+    [SerializeField] Animator anim;
     [SerializeField] float moveSpeed = 5f;
 
     [SerializeField] CinemachineCamera cinemachineCamera;
     [SerializeField] DrawPathMovement[] players;
+    [SerializeField] Color selectedColor = Color.white;
 
     private bool isSelected = false;
     private bool isDrawing = false;
     private bool canMove = false;
 
+    private Camera mainCamera;
     private List<Vector3> pathPoints = new List<Vector3>();
     private LineRenderer lineRenderer;
     private int currentPointIndex = 0;
 
     private Rigidbody rb;
     private Vector3 startPoint;
-
+    private Quaternion startRotation;
     void Awake()
     {
-        if (cinemachineCamera == null) cinemachineCamera = GameObject.Find("Camera Player").GetComponent<CinemachineCamera>();
+        if (cinemachineCamera == null) cinemachineCamera = GameObject.Find("Forward Camera").GetComponent<CinemachineCamera>();
 
         if (players == null || players.Length == 0)
         {
             players = FindObjectsByType<DrawPathMovement>(FindObjectsSortMode.None)
                 .Where(p => p != this)
                 .ToArray();
+        }
+
+        if (anim == null)
+        {
+            anim = transform.GetComponentInChildren<Animator>();
         }
     }
 
@@ -46,6 +53,7 @@ public class DrawPathMovement : MonoBehaviour
             mainCamera = Camera.main;
 
         startPoint = transform.position;
+        startRotation = transform.rotation;
     }
 
     void Update()
@@ -145,6 +153,15 @@ public class DrawPathMovement : MonoBehaviour
 
         // Gerakkan karakter menuju titik berikutnya
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        anim.SetBool("Moving", true);
+
+        // Rotasi karakter menghadap arah gerak dengan mulus
+        Vector3 direction = (target - transform.position).normalized;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f); // 10f = kecepatan rotasi
+        }
 
         if (Vector3.Distance(transform.position, target) < 0.1f)
         {
@@ -153,12 +170,12 @@ public class DrawPathMovement : MonoBehaviour
             // Sudah sampai di titik terakhir
             if (currentPointIndex >= pathPoints.Count)
             {
-                // Hapus garis
                 pathPoints.Clear();
                 lineRenderer.positionCount = 0;
                 canMove = false;
                 isDrawing = false;
                 isSelected = false;
+                anim.SetBool("Moving", false);
             }
         }
     }
@@ -175,6 +192,9 @@ public class DrawPathMovement : MonoBehaviour
         isSelected = false;
         canMove = false;
         rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+        anim.SetBool("Catch", false);
+        anim.SetBool("Moving", false);
+        transform.rotation = startRotation;
     }
 
     public void SetIsSelected(bool selected)
@@ -186,9 +206,20 @@ public class DrawPathMovement : MonoBehaviour
         }
     }
 
+    public Color GetColor()
+    {
+        return selectedColor;
+    }
+
     public void SetIsDrawing(bool drawing) { isDrawing = drawing; }
 
     public void SetCanMove(bool selected) { canMove = selected; }
     public bool GetCanMove() { return canMove; }
 
+    public bool SetCatch(bool catchState)
+    {
+        if (anim == null) return false;
+        anim.SetBool("Catch", catchState);
+        return true;
+    }
 }

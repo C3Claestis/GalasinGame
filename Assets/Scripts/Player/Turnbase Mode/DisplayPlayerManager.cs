@@ -34,7 +34,7 @@ public class DisplayPlayerManager : MonoBehaviour
         {
             if (players[i] != null)
             {
-                colors[i] = players[i].GetComponent<MeshRenderer>().material.color;
+                colors[i] = players[i].GetColor();
             }
         }
 
@@ -47,14 +47,14 @@ public class DisplayPlayerManager : MonoBehaviour
         if (btnDisplayPlayer == null || btnDisplayPlayer.Length == 0)
         {
             GameObject displayParent = GameObject.Find("DisplayPlayer");
-            if (displayParent != null && displayParent.transform.childCount > 0)
+            if (displayParent != null && displayParent.transform.childCount > 1)
             {
                 int childCount = displayParent.transform.childCount;
-                btnDisplayPlayer = new Button[childCount];
-                for (int i = 0; i < childCount; i++)
+                btnDisplayPlayer = new Button[childCount - 1];
+                for (int i = 1; i < childCount; i++)
                 {
                     Transform child = displayParent.transform.GetChild(i);
-                    btnDisplayPlayer[i] = child.GetComponent<Button>();
+                    btnDisplayPlayer[i - 1] = child.GetComponent<Button>();
                 }
             }
         }
