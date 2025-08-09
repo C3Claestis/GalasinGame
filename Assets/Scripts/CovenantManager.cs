@@ -11,7 +11,7 @@ public class CovenantManager : MonoBehaviour
     [SerializeField] Text covenantText;
     [SerializeField] Text loseText;
 
-    [Header("Panel Settings")]   
+    [Header("Panel Settings")]
     [SerializeField] Text titleTxt;
     [SerializeField] Text descriptionTxt1;
     [SerializeField] Text descriptionTxt2;
@@ -19,7 +19,6 @@ public class CovenantManager : MonoBehaviour
     [SerializeField] Image[] starImage;
 
     [Header("Star Sprites")]
-    [SerializeField] Sprite blankStar;
     [SerializeField] Sprite filledStar;
 
     UIManager uiManager;
@@ -39,12 +38,23 @@ public class CovenantManager : MonoBehaviour
 
         InitializeProgress();
         uiManager = GetComponent<UIManager>();
+        progressManager.ResetProgress();
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    private void OnEnable()
+    {
+        ProgressManager.OnStarUpdated += UpdateStars;
+    }
+
+    private void OnDisable()
+    {
+        ProgressManager.OnStarUpdated -= UpdateStars;
     }
 
     private void InitializeProgress()
@@ -74,6 +84,20 @@ public class CovenantManager : MonoBehaviour
     {
         currentCovenantId += Covenant;
         CheckCovenant();
+    }
+
+    private void UpdateStars(int _)
+    {
+        bool[] progressStatus = {
+        progressManager.isProgress1Complete,
+        progressManager.isProgress2Complete,
+        progressManager.isProgress3Complete
+    };
+
+        for (int i = 0; i < starImage.Length; i++)
+        {
+            if (progressStatus[i]) starImage[i].sprite = filledStar;
+        }
     }
 
     public ProgressManager GetProgressManager() => progressManager;

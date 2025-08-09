@@ -122,6 +122,7 @@ public class DrawPathMovement : MonoBehaviour
             isDrawing = false;
             currentPointIndex = 0;
             isSelected = false; // Tidak lagi terpilih setelah selesai menggambar
+            ProgressSystem.Instance.CompleteProgressByType(ProgressType.BerhasilMenggambarLine);
         }
     }
 
@@ -154,6 +155,7 @@ public class DrawPathMovement : MonoBehaviour
         // Gerakkan karakter menuju titik berikutnya
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
         anim.SetBool("Moving", true);
+        ProgressSystem.Instance.CompleteProgressByType(ProgressType.BerhasilMenggerakanPlayer);
 
         // Rotasi karakter menghadap arah gerak dengan mulus
         Vector3 direction = (target - transform.position).normalized;
