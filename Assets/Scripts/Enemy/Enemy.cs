@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     private Animator anim;
 
     private GameManager gameManager;
+    private CovenantManager covenantManager;
     private DrawPathMovement nearestPlayer;
 
     private bool canMove = true;
@@ -30,6 +31,11 @@ public class Enemy : MonoBehaviour
         if (gameManager == null)
         {
             gameManager = FindAnyObjectByType<GameManager>();
+        }
+
+        if (covenantManager == null)
+        {
+            covenantManager = FindAnyObjectByType<CovenantManager>();
         }
 
         if (anim == null)
@@ -208,6 +214,8 @@ public class Enemy : MonoBehaviour
             {
                 _anim.SetCatch(true);
             }
+
+            covenantManager.SetCovenant(1);
         }
     }
 

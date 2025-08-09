@@ -4,6 +4,9 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
+    // Singleton Instance
+    public static GameManager Instance { get; private set; }
+
     Enemy[] enemies;
     DrawPathMovement[] players;
 
@@ -24,6 +27,14 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        // Setup Singleton Instance
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // mencegah duplikat
+            return;
+        }
+        Instance = this;
+
         enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         players = FindObjectsByType<DrawPathMovement>(FindObjectsSortMode.None);
     }
@@ -166,7 +177,7 @@ public class GameManager : MonoBehaviour
             if (player != null)
                 player.ResetPlayer();
         }
-        
+
         foreach (var enemy in enemies)
         {
             if (enemy != null)
@@ -174,4 +185,14 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
+    public int GetDefenderScore()
+    {
+        return defenderScore;
+    }
+
+    public int GetAttackerScore()
+    {
+        return attackerScore;
+    }
 }
