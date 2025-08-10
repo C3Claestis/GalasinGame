@@ -87,18 +87,13 @@ public class GameManager : MonoBehaviour
         StopMoveEnemys();
         StopMovePlayers();
         StopAllCoroutines();
-        ActivePanel(true);
+        nextRoundPanel.SetActive(true);
     }
 
-    private void UpdateAttackerCatch(int score)
+    public void UpdateAttackerCatch(int score)
     {
         attackerScore += score;
-        attackerTxt.text = $"{attackerScore}";
-
-        StopMoveEnemys();
-        StopMovePlayers();
-        StopAllCoroutines();
-        ActivePanel(false);
+        attackerTxt.text = $"{attackerScore}";  
     }
 
     private void RestartGame()
@@ -141,8 +136,7 @@ public class GameManager : MonoBehaviour
             }
 
             if (allChampions && !isUpdated)
-            {
-                UpdateAttackerCatch(1);
+            {              
                 isUpdated = true;
             }
 
@@ -152,20 +146,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Next Round
-    private void ActivePanel(bool isCatched)
-    {
-        nextRoundPanel.SetActive(true);
-
-        if (isCatched)
-        {
-            nextRoundPanel.GetComponentInChildren<Text>().text = $"Tertangkap!";
-        }
-        else
-        {
-            nextRoundPanel.GetComponentInChildren<Text>().text = $"Berhasil Menang!";
-        }
-    }
-
     public void NextRound()
     {
         nextRoundPanel.SetActive(false);

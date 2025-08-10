@@ -3,17 +3,8 @@ using UnityEngine;
 public class SafeZone : MonoBehaviour
 {
     [SerializeField] bool isUjung;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    [SerializeField] CovenantManager covenantManager;
+  
     void OnTriggerEnter(Collider other)
     {
         // Jika masuk ke ujung dan sudah sampai ujung
@@ -26,6 +17,7 @@ public class SafeZone : MonoBehaviour
         if (other.CompareTag("Player") && other.name == "Conqueror" && !isUjung)
         {
             other.name = "Champion";
+            covenantManager.CheckPlayerFinished();
         }
 
     }

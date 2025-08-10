@@ -22,9 +22,11 @@ public class CovenantManager : MonoBehaviour
     [SerializeField] Sprite filledStar;
 
     UIManager uiManager;
+    GameManager gameManager;
     private DrawPathMovement[] players;
     private int currentCovenantId;
 
+    private int countPlayerFinish = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,13 +40,19 @@ public class CovenantManager : MonoBehaviour
 
         InitializeProgress();
         uiManager = GetComponent<UIManager>();
+        gameManager = GetComponent<GameManager>();
         progressManager.ResetProgress();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CheckPlayerFinished()
     {
+        gameManager.UpdateAttackerCatch(1);
+        countPlayerFinish++;
 
+        if (countPlayerFinish >= players.Length)
+        {
+            uiManager.DisplayCompletion();
+        }
     }
 
     private void OnEnable()

@@ -13,8 +13,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] Color gameOverBackgroundColor = Color.red;
     [SerializeField] Image[] gameOverBackgroundImage = new Image[2];
     [SerializeField] Text[] gameOverText = new Text[5];
+    [SerializeField] Image[] starImage = new Image[3];
 
-    
+    [SerializeField] Sprite filledStar;
+
     private CovenantManager covenantManager;
     private ProgressManager progressManager;
 
@@ -27,10 +29,37 @@ public class UIManager : MonoBehaviour
         InitializeProgress();
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnEnable()
     {
+        ProgressManager.OnStarUpdated += StarActive;
+    }
 
+    void OnDisable()
+    {
+        ProgressManager.OnStarUpdated -= StarActive;
+    }
+    
+    public void StarActive(int _)
+    {
+        bool[] progressStatus = {
+            progressManager.isProgress1Complete,
+            progressManager.isProgress2Complete,
+            progressManager.isProgress3Complete
+        };
+
+        for (int i = 0; i < starImage.Length; i++)
+        {
+            if (progressStatus[i])
+                starImage[i].sprite = filledStar;
+        }
+    }
+
+    public void DisplayCompletion()
+    {
+        // Logic to display completion UI
+        gameOverPanel.SetActive(true);
+
+        gameOverText[0].text = "Complete";
     }
 
     public void DisplayGameOver()
