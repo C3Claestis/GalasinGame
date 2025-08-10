@@ -122,11 +122,14 @@ public enum ProgressType
     [Description("Berhasil menekan button Go Throught tanpa menggerakan karakter")]
     ButtonGoThroughtTanpaGerak,
 
-    [Description("Berhasil bergerak sampai ujung dalam 30 detik")]
-    SampaiUjung30Detik,
+    [Description("Berhasil menembus semua penjaga hanya dengan bergerak di satu jalur")]
+    MenembusPenjagaDenganSatuSisiSaja,
 
-    [Description("Berhasil bergerak sampai ujung dalam 1 menit")]
-    SampaiUjung1Menit,
+    [Description("Berhasil berkumpul dalam satu titik yang sama di tengah sisi kiri")]
+    BerkumpulTengahSisiKiri,
+
+    [Description("Berhasil berkumpul dalam satu titik yang sama di tengah sisi kanan")]
+    BerkumpulTengahSisiKanan,
 
     [Description("Berhasil menunggu di ujung maksimal 30 detik")]
     TungguUjung30Detik,
@@ -141,10 +144,7 @@ public enum ProgressType
     SelesaiSebelum5Covenant,
 
     [Description("Berhasil selesai sebelum 7 covenant")]
-    SelesaiSebelum7Covenant,
-
-    [Description("Berhasil selesai sebelum 9 covenant")]
-    SelesaiSebelum9Covenant,
+    SelesaiSebelum7Covenant,  
 
     [Description("Berhasil selesai sebelum 3 covenant")]
     SelesaiSebelum3Covenant,
@@ -153,23 +153,23 @@ public enum ProgressType
     SelesaiSebelum1Covenant
 }
 
-// 0. Berhasil Menggambar Line 
-// 1. Berhasil Menggerakan Player
-// 2. Berhasil Go Throught 
-// 3. Berhasil menekan tombol kamera right/left/center
-// 4. Berhasil Go Throught di atas 1 menit
-// 5. Berhasil Go Throught di atas 2 menit
-// 6. Berhasil Go Throught di atas 30 detik
-// 7. Berhasil jatuh ke jurang
-// 8. Berhasil menekan tombol untuk bergerak
-// 9. Berhasil menekan button go throught tanpa menggerakan karakter
-// 10. Berhasil bergerak selama sampai ujung dalam 30 detik
-// 11. Berhasil bergerak selama sampai ujung dalam 1 menit
-// 12. Berhasil menunggu di ujung maksimal 30 detik
-// 13. Berhasil menunggu di ujung maksimal 1 menit
-// 14. Berhasil menunggu di ujung maksimal 10 detik
-// 15. Berhasil selesai sebelum 5 covenant
-// 16. Berhasil selesai sebelum 7 covenant
-// 17. Berhasil selesai sebelum 9 covenant
-// 18. Berhasil selesai sebelum 3 covenant
-// 19. Berhasil selesai sebelum 1 covenant
+// 0. Berhasil Menggambar Line ✅ 
+// 1. Berhasil Menggerakan Player ✅
+// 2. Berhasil Go Throught ✅
+// 3. Berhasil menekan tombol kamera right/left/center ✅
+// 4. Berhasil Go Throught di atas 1 menit  ✅
+// 5. Berhasil Go Throught di atas 2 menit  ✅
+// 6. Berhasil Go Throught di atas 30 detik ✅
+// 7. Berhasil jatuh ke jurang ✅
+// 8. Berhasil menekan tombol untuk bergerak ✅
+// 9. Berhasil menekan button go throught tanpa menggerakan karakter ✅
+// 10. Berhasil menembus semua penjaga hanya dengan bergerak di satu jalur ✅
+// 11. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kiri
+// 12. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kanan
+// 13. Berhasil menunggu di ujung maksimal 30 detik
+// 14. Berhasil menunggu di ujung maksimal 1 menit
+// 15. Berhasil menunggu di ujung maksimal 10 detik
+// 16. Berhasil selesai sebelum 5 covenant ✅
+// 17. Berhasil selesai sebelum 7 covenant ✅
+// 18. Berhasil selesai sebelum 3 covenant ✅
+// 19. Berhasil selesai sebelum 1 covenant ✅

@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     public void UpdateAttackerCatch(int score)
     {
         attackerScore += score;
-        attackerTxt.text = $"{attackerScore}";  
+        attackerTxt.text = $"{attackerScore}";
     }
 
     private void RestartGame()
@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
             }
 
             if (allChampions && !isUpdated)
-            {              
+            {
                 isUpdated = true;
             }
 
@@ -175,4 +175,9 @@ public class GameManager : MonoBehaviour
     {
         return attackerScore;
     }
+
+    public bool IsAboveOneMinute() => currentTime > 60f;
+    public bool IsAboveTwoMinutes() => currentTime > 120f;
+    public bool IsAboveThirtySeconds() => currentTime > 30f;
+
 }

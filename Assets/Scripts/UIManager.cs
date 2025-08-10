@@ -20,12 +20,17 @@ public class UIManager : MonoBehaviour
     private CovenantManager covenantManager;
     private ProgressManager progressManager;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         covenantManager = GetComponent<CovenantManager>();
 
         progressManager = covenantManager.GetProgressManager();
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
         InitializeProgress();
     }
 
@@ -38,7 +43,7 @@ public class UIManager : MonoBehaviour
     {
         ProgressManager.OnStarUpdated -= StarActive;
     }
-    
+
     public void StarActive(int _)
     {
         bool[] progressStatus = {
@@ -60,6 +65,11 @@ public class UIManager : MonoBehaviour
         gameOverPanel.SetActive(true);
 
         gameOverText[0].text = "Complete";
+        ProgressSystem.Instance.CompleteProgressByType(ProgressType.BerhasilGoThrought);
+
+        if (GameManager.Instance.IsAboveOneMinute()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought1Menit);
+        if (GameManager.Instance.IsAboveTwoMinutes()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought2Menit);
+        if (GameManager.Instance.IsAboveThirtySeconds()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought30Detik);
     }
 
     public void DisplayGameOver()

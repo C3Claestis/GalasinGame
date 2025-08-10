@@ -26,6 +26,13 @@ public class DrawPathMovement : MonoBehaviour
     private Rigidbody rb;
     private Vector3 startPoint;
     private Quaternion startRotation;
+
+    private GoThroughtFunction goThrought;
+    private bool hasReportedMove = false;
+
+    private float firstXpos;
+    private bool SingleLine = true;
+
     void Awake()
     {
         if (cinemachineCamera == null) cinemachineCamera = GameObject.Find("Forward Camera").GetComponent<CinemachineCamera>();
@@ -54,6 +61,13 @@ public class DrawPathMovement : MonoBehaviour
 
         startPoint = transform.position;
         startRotation = transform.rotation;
+
+        if (goThrought == null)
+        {
+            goThrought = FindFirstObjectByType<GoThroughtFunction>();
+        }
+
+        firstXpos = transform.position.x;
     }
 
     void Update()
@@ -149,6 +163,13 @@ public class DrawPathMovement : MonoBehaviour
             return;
         }
 
+        // ⬇️ Panggil SetMove(-1) hanya sekali saat mulai bergerak
+        if (!hasReportedMove)
+        {
+            goThrought.SetDecreaseMove(1); // atau goThrought.SetMove(-1) kalau hanya mengurangi
+            hasReportedMove = true;
+        }
+
         Vector3 target = pathPoints[currentPointIndex];
         target.y = transform.position.y;
 
@@ -156,6 +177,9 @@ public class DrawPathMovement : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
         anim.SetBool("Moving", true);
         ProgressSystem.Instance.CompleteProgressByType(ProgressType.BerhasilMenggerakanPlayer);
+
+        //Check Single Line
+        CheckPositionX();
 
         // Rotasi karakter menghadap arah gerak dengan mulus
         Vector3 direction = (target - transform.position).normalized;
@@ -178,6 +202,10 @@ public class DrawPathMovement : MonoBehaviour
                 isDrawing = false;
                 isSelected = false;
                 anim.SetBool("Moving", false);
+
+                // ⬇️ Panggil SetMove(+1) saat selesai bergerak
+                goThrought.SetInreaseMove(1); // atau goThrought.SetMove(+1) kalau hanya menambah
+                hasReportedMove = false; // Reset agar bisa lapor lagi di perjalanan berikutnya
             }
         }
     }
@@ -224,4 +252,24 @@ public class DrawPathMovement : MonoBehaviour
         anim.SetBool("Catch", catchState);
         return true;
     }
+
+    void CheckPositionX()
+    {
+        if (firstXpos > 0)
+        {
+            if (transform.position.x < 0)
+            {
+                SingleLine = false;
+            }
+        }
+        else
+        {
+            if (transform.position.x > 0)
+            {
+                SingleLine = false;
+            }
+        }
+    }
+
+    public bool GetSingleLine() => SingleLine;
 }

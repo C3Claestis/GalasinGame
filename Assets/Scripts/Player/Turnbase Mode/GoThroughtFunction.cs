@@ -3,12 +3,14 @@ using Unity.Cinemachine;
 using UnityEngine.UI;
 
 public class GoThroughtFunction : MonoBehaviour
-{    
+{
     [SerializeField] private CinemachineCamera cinemachineCamera;
     [SerializeField] private Transform displayPlayerManager;
     [SerializeField] private DisplayPlayerManager display;
     [SerializeField] private Button btnGoThrought;
     [SerializeField] private DrawPathMovement[] players;
+
+    private int countNotMovePlayer;
 
     private void Awake()
     {
@@ -26,6 +28,8 @@ public class GoThroughtFunction : MonoBehaviour
         {
             display = FindAnyObjectByType<DisplayPlayerManager>();
         }
+
+        countNotMovePlayer = players.Length;
     }
 
     public void GoThroughAllPlayers()
@@ -43,6 +47,7 @@ public class GoThroughtFunction : MonoBehaviour
         cinemachineCamera.Target.TrackingTarget = transform;
 
         display.ReactivateButtonsIfAllPlayersCanMoveWithDelay();
+        Invoke(nameof(CheckMovingPlayer), 1f);
     }
 
     public void CheckAllButtonsAndActivateGoThrought()
@@ -59,5 +64,23 @@ public class GoThroughtFunction : MonoBehaviour
         }
 
         btnGoThrought.interactable = allDisabled;
+    }
+
+    public void SetDecreaseMove(int value)
+    {
+        countNotMovePlayer -= value;
+    }
+
+    public void SetInreaseMove(int value)
+    {
+        countNotMovePlayer += value;
+    }
+
+    public void CheckMovingPlayer()
+    {
+        if (countNotMovePlayer == players.Length)
+        {
+            ProgressSystem.Instance.CompleteProgressByType(ProgressType.ButtonGoThroughtTanpaGerak);
+        }
     }
 }

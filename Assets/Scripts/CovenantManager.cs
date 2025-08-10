@@ -44,6 +44,7 @@ public class CovenantManager : MonoBehaviour
         progressManager.ResetProgress();
     }
 
+    #region Trigger UI Finish and Lose
     public void CheckPlayerFinished()
     {
         gameManager.UpdateAttackerCatch(1);
@@ -52,9 +53,20 @@ public class CovenantManager : MonoBehaviour
         if (countPlayerFinish >= players.Length)
         {
             uiManager.DisplayCompletion();
+            CheckCovenantIndex();
         }
     }
 
+    private void CheckCovenant()
+    {
+        if (currentCovenantId >= enemyRound)
+        {
+            uiManager.DisplayGameOver();
+        }
+    }
+    #endregion
+
+    #region Function For Star Update
     private void OnEnable()
     {
         ProgressManager.OnStarUpdated += UpdateStars;
@@ -63,6 +75,45 @@ public class CovenantManager : MonoBehaviour
     private void OnDisable()
     {
         ProgressManager.OnStarUpdated -= UpdateStars;
+    }
+
+    private void UpdateStars(int _)
+    {
+        bool[] progressStatus = {
+        progressManager.isProgress1Complete,
+        progressManager.isProgress2Complete,
+        progressManager.isProgress3Complete
+    };
+
+        for (int i = 0; i < starImage.Length; i++)
+        {
+            if (progressStatus[i]) starImage[i].sprite = filledStar;
+        }
+    }
+    #endregion
+
+    private void CheckCovenantIndex()
+    {
+        int[] thresholds = { 1, 3, 5, 7 };
+        ProgressType[] progressTypes =
+        {
+        ProgressType.SelesaiSebelum1Covenant,
+        ProgressType.SelesaiSebelum3Covenant,
+        ProgressType.SelesaiSebelum5Covenant,
+        ProgressType.SelesaiSebelum7Covenant
+    };
+
+        for (int i = 0; i < thresholds.Length; i++)
+        {
+            if (enemyRound < thresholds[i])
+            {
+                for (int j = i; j < progressTypes.Length; j++)
+                {
+                    ProgressSystem.Instance.CompleteProgressByType(progressTypes[j]);
+                }
+                break; // keluar setelah menemukan batas pertama
+            }
+        }
     }
 
     private void InitializeProgress()
@@ -80,32 +131,10 @@ public class CovenantManager : MonoBehaviour
         descriptionTxt3.text = progressManager.GetProgress3Description();
     }
 
-    private void CheckCovenant()
-    {
-        if (currentCovenantId >= enemyRound)
-        {
-            uiManager.DisplayGameOver();
-        }
-    }
-
     public void SetCovenant(int Covenant)
     {
         currentCovenantId += Covenant;
         CheckCovenant();
-    }
-
-    private void UpdateStars(int _)
-    {
-        bool[] progressStatus = {
-        progressManager.isProgress1Complete,
-        progressManager.isProgress2Complete,
-        progressManager.isProgress3Complete
-    };
-
-        for (int i = 0; i < starImage.Length; i++)
-        {
-            if (progressStatus[i]) starImage[i].sprite = filledStar;
-        }
     }
 
     public ProgressManager GetProgressManager() => progressManager;

@@ -2,37 +2,61 @@ using UnityEngine;
 
 public class SafeZone : MonoBehaviour
 {
-    [SerializeField] bool isUjung;
-    [SerializeField] CovenantManager covenantManager;
-  
-    void OnTriggerEnter(Collider other)
+    [SerializeField] private CovenantManager covenantManager;
+    [SerializeField] private DrawPathMovement[] players;
+
+    void Start()
     {
-        // Jika masuk ke ujung dan sudah sampai ujung
-        if (other.CompareTag("Player") && other.name == "Warrior" && isUjung)
+        if (players == null || players.Length == 0)
         {
-            other.name = "Gladiator";
+            players = FindObjectsByType<DrawPathMovement>(FindObjectsSortMode.None);
         }
-
-        //Jika masuk ke base dan sudah sampai base setelah dari ujung
-        if (other.CompareTag("Player") && other.name == "Conqueror" && !isUjung)
-        {
-            other.name = "Champion";
-            covenantManager.CheckPlayerFinished();
-        }
-
     }
-    void OnTriggerExit(Collider other)
+    
+    void Update()
     {
-        //Jika keluar dari base dan mulai ke ujung
-        if (other.CompareTag("Player") && other.name != "Warrior" && !isUjung)
+        foreach (var p in players)
         {
-            other.name = "Warrior";
-        }
+            if (p == null) continue;
+            Transform t = p.transform;
 
-        // Jika sudah sampai ujung dan mulai kembali ke base
-        if (other.CompareTag("Player") && other.name == "Gladiator" && isUjung)
-        {
-            other.name = "Conqueror";
+            // Pastikan objeknya punya tag Player
+            if (!t.CompareTag("Player")) continue;
+
+            string name = t.name;
+            float z = t.position.z;
+
+            // 1. Jika sudah kurang dari -12 dan tag player → jadi Warrior
+            if (z < -12f && name != "Warrior" && name != "Gladiator" && name != "Conqueror" && name != "Champion")
+            {
+                t.name = "Warrior";
+            }
+
+            // 2. Jika >= 12 dan tag Warrior → jadi Gladiator
+            if (z >= 12f && name == "Warrior")
+            {
+                t.name = "Gladiator";
+            }
+
+            // 3. Jika Gladiator dan < 12 → jadi Conqueror
+            if (name == "Gladiator" && z < 12f)
+            {
+                t.name = "Conqueror";
+            }
+
+            // 4. Jika Conqueror dan z antara -13 sampai -19 → jadi Champion
+            if (name == "Conqueror" && z <= -13f && z >= -19f)
+            {
+                t.name = "Champion";
+                covenantManager.CheckPlayerFinished();
+
+                if (p.GetSingleLine())
+                {
+                    ProgressSystem.Instance.CompleteProgressByType(
+                        ProgressType.MenembusPenjagaDenganSatuSisiSaja
+                    );
+                }
+            }
         }
     }
 }
