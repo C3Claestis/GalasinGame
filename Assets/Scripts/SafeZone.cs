@@ -2,8 +2,20 @@ using UnityEngine;
 
 public class SafeZone : MonoBehaviour
 {
+
     [SerializeField] private CovenantManager covenantManager;
     [SerializeField] private DrawPathMovement[] players;
+
+    [SerializeField] float awalSafeZone;
+    [SerializeField] float akhirSafeZone;
+
+    [SerializeField] float ujungSafeZone;
+
+    private PlayerCheckingSamePos checker;
+    public float GetUjungSafeZone()
+    {
+        return ujungSafeZone;
+    }
 
     void Start()
     {
@@ -11,8 +23,10 @@ public class SafeZone : MonoBehaviour
         {
             players = FindObjectsByType<DrawPathMovement>(FindObjectsSortMode.None);
         }
+
+        checker = GetComponent<PlayerCheckingSamePos>();
     }
-    
+
     void Update()
     {
         foreach (var p in players)
@@ -36,16 +50,27 @@ public class SafeZone : MonoBehaviour
             if (z >= 12f && name == "Warrior")
             {
                 t.name = "Gladiator";
+
+                // Kalau belum ada gladiator sebelumnya → mulai timer
+                if (!checker.HasAnyGladiator())
+                {
+                    checker.StartAllTimers();
+                }
+                else
+                {
+                    // Kalau gladiator sudah ada, berarti ini gladiator baru → langsung eksekusi progress real-time
+                    checker.OnNewGladiator();
+                }
             }
 
             // 3. Jika Gladiator dan < 12 → jadi Conqueror
-            if (name == "Gladiator" && z < 12f)
+            if (name == "Gladiator" && z < ujungSafeZone)
             {
                 t.name = "Conqueror";
             }
 
             // 4. Jika Conqueror dan z antara -13 sampai -19 → jadi Champion
-            if (name == "Conqueror" && z <= -13f && z >= -19f)
+            if (name == "Conqueror" && z <= awalSafeZone && z >= akhirSafeZone)
             {
                 t.name = "Champion";
                 covenantManager.CheckPlayerFinished();

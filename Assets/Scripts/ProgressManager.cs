@@ -166,9 +166,9 @@ public enum ProgressType
 // 10. Berhasil menembus semua penjaga hanya dengan bergerak di satu jalur ✅
 // 11. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kiri
 // 12. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kanan
-// 13. Berhasil menunggu di ujung maksimal 30 detik
-// 14. Berhasil menunggu di ujung maksimal 1 menit
-// 15. Berhasil menunggu di ujung maksimal 10 detik
+// 13. Berhasil menunggu di ujung maksimal 30 detik ✅
+// 14. Berhasil menunggu di ujung maksimal 1 menit ✅
+// 15. Berhasil menunggu di ujung maksimal 10 detik ✅
 // 16. Berhasil selesai sebelum 5 covenant ✅
 // 17. Berhasil selesai sebelum 7 covenant ✅
 // 18. Berhasil selesai sebelum 3 covenant ✅
