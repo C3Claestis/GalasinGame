@@ -164,8 +164,8 @@ public enum ProgressType
 // 8. Berhasil menekan tombol untuk bergerak ✅
 // 9. Berhasil menekan button go throught tanpa menggerakan karakter ✅
 // 10. Berhasil menembus semua penjaga hanya dengan bergerak di satu jalur ✅
-// 11. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kiri
-// 12. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kanan
+// 11. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kiri ✅
+// 12. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kanan ✅
 // 13. Berhasil menunggu di ujung maksimal 30 detik ✅
 // 14. Berhasil menunggu di ujung maksimal 1 menit ✅
 // 15. Berhasil menunggu di ujung maksimal 10 detik ✅
