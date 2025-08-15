@@ -113,8 +113,8 @@ public enum ProgressType
     [Description("Berhasil Go Throught di atas 30 detik")]
     GoThrought30Detik,
 
-    [Description("Berhasil jatuh ke jurang")]
-    JatuhKeJurang,
+    [Description("Berhasil keluar area pertandingan")]
+    KeluarAreaPertandingan,
 
     [Description("Berhasil menekan tombol untuk bergerak")]
     TekanTombolBergerak,
@@ -157,19 +157,19 @@ public enum ProgressType
 // 1. Berhasil Menggerakan Player ✅
 // 2. Berhasil Go Throught ✅
 // 3. Berhasil menekan tombol kamera right/left/center ✅
-// 4. Berhasil Go Throught di atas 1 menit  ✅
-// 5. Berhasil Go Throught di atas 2 menit  ✅
-// 6. Berhasil Go Throught di atas 30 detik ✅
-// 7. Berhasil jatuh ke jurang ✅
-// 8. Berhasil menekan tombol untuk bergerak ✅
-// 9. Berhasil menekan button go throught tanpa menggerakan karakter ✅
-// 10. Berhasil menembus semua penjaga hanya dengan bergerak di satu jalur ✅
-// 11. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kiri ✅
-// 12. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kanan ✅
-// 13. Berhasil menunggu di ujung maksimal 30 detik ✅
-// 14. Berhasil menunggu di ujung maksimal 1 menit ✅
-// 15. Berhasil menunggu di ujung maksimal 10 detik ✅
-// 16. Berhasil selesai sebelum 5 covenant ✅
-// 17. Berhasil selesai sebelum 7 covenant ✅
-// 18. Berhasil selesai sebelum 3 covenant ✅
+// 4. Berhasil menekan tombol untuk bergerak ✅
+// 5. Berhasil selesai sebelum 7 covenant ✅
+// 6. Berhasil Go Throught di atas 2 menit  ✅
+// 7. Berhasil selesai sebelum 5 covenant ✅
+// 8. Berhasil Go Throught di atas 30 detik ✅
+// 9. Berhasil keluar area pertandingan ✅
+// 10. Berhasil Go Throught di atas 1 menit  ✅
+// 11. Berhasil menekan button go throught tanpa menggerakan karakter ✅
+// 12. Berhasil menembus semua penjaga hanya dengan bergerak di satu jalur ✅
+// 13. Berhasil menunggu di ujung maksimal 1 menit ✅
+// 14. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kiri ✅
+// 15. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kanan ✅
+// 16. Berhasil menunggu di ujung maksimal 30 detik ✅
+// 17. Berhasil selesai sebelum 3 covenant ✅
+// 18. Berhasil menunggu di ujung maksimal 10 detik ✅
 // 19. Berhasil selesai sebelum 1 covenant ✅

@@ -8,6 +8,8 @@ public class DisplayPlayerManager : MonoBehaviour
     [SerializeField] private DrawPathMovement[] players;
     [SerializeField] private Button[] btnDisplayPlayer;
 
+    [SerializeField] private Image[] frameBtn;
+
     private Color[] colors;
 
     private void Awake()
@@ -51,10 +53,13 @@ public class DisplayPlayerManager : MonoBehaviour
             {
                 int childCount = displayParent.transform.childCount;
                 btnDisplayPlayer = new Button[childCount - 1];
+                frameBtn = new Image[childCount - 1];
+
                 for (int i = 1; i < childCount; i++)
                 {
                     Transform child = displayParent.transform.GetChild(i);
                     btnDisplayPlayer[i - 1] = child.GetComponent<Button>();
+                    frameBtn[i - 1] = child.GetChild(0).GetComponent<Image>();
                 }
             }
         }
@@ -92,10 +97,18 @@ public class DisplayPlayerManager : MonoBehaviour
                     players[index].SetCanMove(false);
                     btnDisplayPlayer[index].interactable = false; // Button jadi tidak bisa diklik lagi
                     goThroughtFunction.CheckAllButtonsAndActivateGoThrought();
+
+                    // Ubah alpha menjadi 150
+                    if (frameBtn[index] != null)
+                    {
+                        Color c = frameBtn[index].color;
+                        c.a = 150f / 255f;
+                        frameBtn[index].color = c;
+                    }
                 });
             }
         }
-    }    
+    }
 
     public void ReactivateButtonsIfAllPlayersCanMoveWithDelay()
     {
@@ -118,10 +131,20 @@ public class DisplayPlayerManager : MonoBehaviour
     private System.Collections.IEnumerator ReactivateButtonsCoroutine()
     {
         yield return new WaitForSeconds(5f);
-        foreach (var btn in btnDisplayPlayer)
+        for (int i = 0; i < btnDisplayPlayer.Length; i++)
         {
-            if (btn != null)
-                btn.interactable = true;
+            if (btnDisplayPlayer[i] != null)
+            {
+                btnDisplayPlayer[i].interactable = true;
+
+                // Kembalikan alpha jadi 255
+                if (frameBtn[i] != null)
+                {
+                    Color c = frameBtn[i].color;
+                    c.a = 1f; // 255 / 255
+                    frameBtn[i].color = c;
+                }
+            }
         }
     }
 }

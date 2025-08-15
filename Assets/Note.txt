@@ -1,0 +1,61 @@
+Name Game : Sodor Sprint: Guard or Run
+
+Genre Game
+Utama: Strategy, Turn-Based
+Sub Genre: Action Tactics, Party Game, Board-like Movement
+
+Platform: PC (Unity, Offline Mode).
+
+Objective:
+Pemain (penyerang) harus menyeberangi semua garis penjaga hingga ke ujung arena dan kembali ke titik awal untuk menang.
+
+Mekanisme Utama:
+Turn-Based Movement: Pemain bergerak dalam giliran, setiap turn punya jumlah langkah atau aksi terbatas.
+Penjaga (AI): AI bergerak sesuai giliran, mencoba memblokir atau menangkap pemain.
+Strategic Path: Pemain harus memilih jalur aman untuk menghindari penjaga.
+Elimination: Jika tertangkap, ronde berakhir dan pemain kalah.
+
+Unsur Strategi:
+Manajemen langkah
+Prediksi gerakan AI
+Pemilihan momen terbaik untuk sprint ke garis berikutnya
+
+Target Audience
+Usia: 10 – 35 tahun
+
+Target Pemain:
+Pemain yang suka strategi santai tapi menegangkan.
+Penggemar permainan tradisional yang ingin nuansa baru.
+Pemain solo yang ingin melatih kemampuan berpikir taktis.
+
+Selling Point:
+Kombinasi Tradisional + Strategi: Gobak Sodor versi taktis.
+Replayability Tinggi: Posisi AI dan jalur bisa di-random untuk tiap permainan.
+Cocok untuk Casual dan Strategist: Bisa dimainkan untuk santai atau serius.
+
+Potensi Mode
+Story Mode: Menyelesaikan level demi level dengan kesulitan AI yang meningkat.
+Challenge Mode: Menyelesaikan rintangan khusus, seperti langkah terbatas.
+Practice Mode: Belajar mekanik tanpa batasan langkah atau waktu.
+
+
+// 0. Berhasil Menggambar Line ✅ 
+// 1. Berhasil Menggerakan Player ✅
+// 2. Berhasil Go Throught ✅
+// 3. Berhasil menekan tombol kamera right/left/center ✅
+// 4. Berhasil menekan tombol untuk bergerak ✅
+// 5. Berhasil selesai sebelum 7 covenant ✅
+// 6. Berhasil Go Throught di atas 2 menit  ✅
+// 7. Berhasil selesai sebelum 5 covenant ✅
+// 8. Berhasil Go Throught di atas 30 detik ✅
+// 9. Berhasil jatuh ke jurang ✅
+// 10. Berhasil Go Throught di atas 1 menit  ✅
+// 11. Berhasil menekan button go throught tanpa menggerakan karakter ✅
+// 12. Berhasil menembus semua penjaga hanya dengan bergerak di satu jalur ✅
+// 13. Berhasil menunggu di ujung maksimal 1 menit ✅
+// 14. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kiri ✅
+// 15. Berhasil berkumpul dalam satu titik yang sama di tengah sisi kanan ✅
+// 16. Berhasil menunggu di ujung maksimal 30 detik ✅
+// 17. Berhasil selesai sebelum 3 covenant ✅
+// 18. Berhasil menunggu di ujung maksimal 10 detik ✅
+// 19. Berhasil selesai sebelum 1 covenant ✅

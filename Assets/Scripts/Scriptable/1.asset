@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: 
   title: Awal Permulaan
-  progress1: 15
-  progress2: 13
-  progress3: 14
-  progress1Index: 15
-  progress2Index: 13
+  progress1: 0
+  progress2: 2
+  progress3: 3
+  progress1Index: 12
+  progress2Index: 11
   progress3Index: 14
   isProgress1Complete: 0
   isProgress2Complete: 0

@@ -7,10 +7,8 @@ using UnityEngine.EventSystems; // Tambahkan di atas
 [RequireComponent(typeof(LineRenderer))]
 public class DrawPathMovement : MonoBehaviour
 {
-    [SerializeField] Animator anim;
     [SerializeField] float moveSpeed = 5f;
 
-    [SerializeField] CinemachineCamera cinemachineCamera;
     [SerializeField] DrawPathMovement[] players;
     [SerializeField] Color selectedColor = Color.white;
 
@@ -18,11 +16,13 @@ public class DrawPathMovement : MonoBehaviour
     private bool isDrawing = false;
     private bool canMove = false;
 
+    private CinemachineCamera cinemachineCamera;
     private Camera mainCamera;
     private List<Vector3> pathPoints = new List<Vector3>();
     private LineRenderer lineRenderer;
     private int currentPointIndex = 0;
 
+    private Animator anim;
     private Rigidbody rb;
     private Vector3 startPoint;
     private Quaternion startRotation;
@@ -81,12 +81,12 @@ public class DrawPathMovement : MonoBehaviour
         // Freeze posisi Y jika x di luar batas
         if (transform.position.x > 12f || transform.position.x < -12f)
         {
-            rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
+            //rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
 
         }
         else
         {
-            rb.constraints |= RigidbodyConstraints.FreezePositionY;
+            //rb.constraints |= RigidbodyConstraints.FreezePositionY;
         }
     }
 
@@ -121,7 +121,7 @@ public class DrawPathMovement : MonoBehaviour
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Vector3 point = new Vector3(hit.point.x, 0.5f, hit.point.z); // Y tetap 1.25
+                Vector3 point = new Vector3(hit.point.x, 0.5f, hit.point.z); // Y tetap 0.5
                 if (pathPoints.Count == 0 || Vector3.Distance(point, pathPoints[pathPoints.Count - 1]) > 0.05f)
                 {
                     pathPoints.Add(point);

@@ -44,6 +44,23 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        // Jika moveSpeed >= 3, hanya atur speed animasi Move
+        if (moveSpeed >= 3f && moveSpeed <= 4f)
+        {
+            anim.SetFloat("MoveSpeedAnim", 0.6f);
+        }
+        else if(moveSpeed > 4f)
+        {
+            anim.SetFloat("MoveSpeedAnim", 0.7f);
+        }
+        else
+        {
+            anim.SetFloat("MoveSpeedAnim", 0.5f);
+        }
+    }
+    
     // Update is called once per frame
     void Update()
     {

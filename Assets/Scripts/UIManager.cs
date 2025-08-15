@@ -70,6 +70,8 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance.IsAboveOneMinute()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought1Menit);
         if (GameManager.Instance.IsAboveTwoMinutes()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought2Menit);
         if (GameManager.Instance.IsAboveThirtySeconds()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought30Detik);
+
+        covenantManager.enabled = false;
     }
 
     public void DisplayGameOver()
