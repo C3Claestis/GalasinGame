@@ -19,18 +19,20 @@ public class UIManager : MonoBehaviour
 
     private CovenantManager covenantManager;
     private ProgressManager progressManager;
+    private StarValidasi starValidasi;
 
     void Awake()
     {
         covenantManager = GetComponent<CovenantManager>();
 
         progressManager = covenantManager.GetProgressManager();
+        starValidasi = covenantManager.GetStarValidasi();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
         InitializeProgress();
     }
 
@@ -70,6 +72,11 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance.IsAboveOneMinute()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought1Menit);
         if (GameManager.Instance.IsAboveTwoMinutes()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought2Menit);
         if (GameManager.Instance.IsAboveThirtySeconds()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought30Detik);
+
+        // Sinkronisasi nilai StarValidasi
+        starValidasi.validasi1 = progressManager.isProgress1Complete;
+        starValidasi.validasi2 = progressManager.isProgress2Complete;
+        starValidasi.validasi3 = progressManager.isProgress3Complete;
 
         covenantManager.enabled = false;
     }

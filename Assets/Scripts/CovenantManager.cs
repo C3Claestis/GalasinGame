@@ -5,6 +5,7 @@ public class CovenantManager : MonoBehaviour
 {
     [Header("Progress and UI Manager")]
     [SerializeField] ProgressManager progressManager;
+    [SerializeField] StarValidasi starValidasi;
 
     [Header("Covenant Settings")]
     [SerializeField] int enemyRound;
@@ -41,7 +42,25 @@ public class CovenantManager : MonoBehaviour
         InitializeProgress();
         uiManager = GetComponent<UIManager>();
         gameManager = GetComponent<GameManager>();
-        progressManager.ResetProgress();
+        SetUpStar();
+    }
+
+    private void SetUpStar()
+    {
+        // Sinkronisasi nilai StarValidasi
+        progressManager.isProgress1Complete = starValidasi.validasi1;
+        progressManager.isProgress2Complete = starValidasi.validasi2;
+        progressManager.isProgress3Complete = starValidasi.validasi3;
+
+        for (int i = 0; i < starImage.Length; i++)
+        {
+            if ((i == 0 && starValidasi.validasi1) ||
+                (i == 1 && starValidasi.validasi2) ||
+                (i == 2 && starValidasi.validasi3))
+            {
+                starImage[i].sprite = filledStar;
+            }
+        }
     }
 
     #region Trigger UI Finish and Lose
@@ -138,4 +157,5 @@ public class CovenantManager : MonoBehaviour
     }
 
     public ProgressManager GetProgressManager() => progressManager;
+    public StarValidasi GetStarValidasi() => starValidasi;
 }

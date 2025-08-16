@@ -38,6 +38,12 @@ Story Mode: Menyelesaikan level demi level dengan kesulitan AI yang meningkat.
 Challenge Mode: Menyelesaikan rintangan khusus, seperti langkah terbatas.
 Practice Mode: Belajar mekanik tanpa batasan langkah atau waktu.
 
+Fitur:
+- Upgrade panjang line draw
+- Upgrade speed
+- Unlock skill pengurangan covenant
+- Unlock skill kamuflase 
+- Unlock skill chance hidup saat keluar area
 
 // 0. Berhasil Menggambar Line ✅ 
 // 1. Berhasil Menggerakan Player ✅
