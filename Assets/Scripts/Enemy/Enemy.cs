@@ -51,7 +51,7 @@ public class Enemy : MonoBehaviour
         {
             anim.SetFloat("MoveSpeedAnim", 0.6f);
         }
-        else if(moveSpeed > 4f)
+        else if (moveSpeed > 4f)
         {
             anim.SetFloat("MoveSpeedAnim", 0.7f);
         }
@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour
             anim.SetFloat("MoveSpeedAnim", 0.5f);
         }
     }
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -182,7 +182,6 @@ public class Enemy : MonoBehaviour
             if (nearestPlayer.transform.position.x < transform.position.x - threshold)
             {
                 transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                newMove = FlipMove(currentMove); // Flip animasi
             }
             else if (nearestPlayer.transform.position.x > transform.position.x + threshold)
             {
@@ -195,7 +194,6 @@ public class Enemy : MonoBehaviour
             if (nearestPlayer.transform.position.z > transform.position.z + threshold)
             {
                 transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                newMove = FlipMove(currentMove);
             }
             else if (nearestPlayer.transform.position.z < transform.position.z - threshold)
             {
@@ -215,7 +213,6 @@ public class Enemy : MonoBehaviour
     {
         return value == 0f ? 1f : 0f;
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -245,8 +242,7 @@ public class Enemy : MonoBehaviour
     public void SetCanMove(bool canMove)
     {
         this.canMove = canMove;
-    }
-
+    }   
 }
 
 public enum MoveDirection

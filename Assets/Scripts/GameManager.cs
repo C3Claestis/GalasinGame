@@ -10,6 +10,13 @@ public class GameManager : MonoBehaviour
     Enemy[] enemies;
     DrawPathMovement[] players;
 
+    [Header("Audio Settings")]
+    [SerializeField] AudioSource audioSourcePlayer;
+    [SerializeField] AudioSource audioSourceEnemy;
+    [SerializeField] AudioClip movePlayerSFX;
+    [SerializeField] AudioClip enemyPlayerSFX;
+
+    [Header("UI Elements")]
     [SerializeField] Text defenderTxt;
     [SerializeField] Text attackerTxt;
 
@@ -48,6 +55,101 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(CheckPlayersNameCoroutine());
     }
+
+    void Update()
+    {
+        HandlePlayerMoveSFX();
+        HandleEnemyMoveSFX();
+    }
+
+    #region Audio Player Move
+    private void HandlePlayerMoveSFX()
+    {
+        if (players == null || players.Length == 0) return;
+
+        bool anyMoving = false;
+        bool allIdle = true;
+
+        foreach (var player in players)
+        {
+            if (player != null)
+            {
+                if (player.GetMoving())
+                {
+                    anyMoving = true;   // ada yg gerak
+                    allIdle = false;    // berarti tidak semua idle
+                }
+            }
+        }
+
+        // Jika ada yang bergerak → play SFX
+        if (anyMoving)
+        {
+            if (!audioSourcePlayer.isPlaying || audioSourcePlayer.clip != movePlayerSFX)
+            {
+                audioSourcePlayer.clip = movePlayerSFX;
+                audioSourcePlayer.loop = true;
+                audioSourcePlayer.pitch = 2f;
+                audioSourcePlayer.Play();
+            }
+        }
+        // Jika semuanya idle → stop SFX
+        else if (allIdle)
+        {
+            if (audioSourcePlayer.isPlaying && audioSourcePlayer.clip == movePlayerSFX)
+            {
+                audioSourcePlayer.Stop();
+            }
+        }
+    }
+    #endregion
+
+    #region Audio Enemy Move
+    private void HandleEnemyMoveSFX()
+    {
+        if (enemies == null || enemies.Length == 0) return;
+
+        bool anyMoving = false;
+        bool allIdle = true;
+
+        foreach (var enemy in enemies)
+        {
+            if (enemy != null)
+            {
+                Animator anim = enemy.GetComponentInChildren<Animator>();
+                if (anim != null)
+                {
+                    bool isMoving = anim.GetCurrentAnimatorStateInfo(0).IsName("Move");
+
+                    if (isMoving)
+                    {
+                        anyMoving = true;   // ada yg gerak
+                        allIdle = false;    // berarti tidak semua idle
+                    }
+                }
+            }
+        }
+
+        // Jika ada minimal 1 enemy lagi "Move"
+        if (anyMoving)
+        {
+            if (!audioSourceEnemy.isPlaying || audioSourceEnemy.clip != enemyPlayerSFX)
+            {
+                audioSourceEnemy.clip = enemyPlayerSFX;
+                audioSourceEnemy.loop = true;
+                audioSourceEnemy.Play();
+            }
+        }
+        // Jika semua enemy tidak "Move"
+        else if (allIdle)
+        {
+            if (audioSourceEnemy.isPlaying && audioSourceEnemy.clip == enemyPlayerSFX)
+            {
+                audioSourceEnemy.Stop();
+            }
+        }
+    }
+    #endregion
 
     #region Timer
     // Fungsi untuk update tampilan timer

@@ -8,7 +8,6 @@ using UnityEngine.EventSystems; // Tambahkan di atas
 public class DrawPathMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5f;
-
     [SerializeField] DrawPathMovement[] players;
     [SerializeField] Color selectedColor = Color.white;
 
@@ -16,6 +15,7 @@ public class DrawPathMovement : MonoBehaviour
     private bool isDrawing = false;
     private bool canMove = false;
 
+    private AudioSource audioSource; // audio player
     private CinemachineCamera cinemachineCamera;
     private Camera mainCamera;
     private List<Vector3> pathPoints = new List<Vector3>();
@@ -32,6 +32,8 @@ public class DrawPathMovement : MonoBehaviour
 
     private float firstXpos;
     private bool SingleLine = true;
+
+    private bool isMove = false;
 
     void Awake()
     {
@@ -77,17 +79,6 @@ public class DrawPathMovement : MonoBehaviour
         // Karakter hanya bergerak jika selesai menggambar dan diperbolehkan
         if (canMove)
             MoveAlongPath();
-
-        // Freeze posisi Y jika x di luar batas
-        if (transform.position.x > 12f || transform.position.x < -12f)
-        {
-            //rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
-
-        }
-        else
-        {
-            //rb.constraints |= RigidbodyConstraints.FreezePositionY;
-        }
     }
 
     void HandleMouseInput()
@@ -175,7 +166,9 @@ public class DrawPathMovement : MonoBehaviour
 
         // Gerakkan karakter menuju titik berikutnya
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+
         anim.SetBool("Moving", true);
+
         ProgressSystem.Instance.CompleteProgressByType(ProgressType.BerhasilMenggerakanPlayer);
 
         //Check Single Line
@@ -272,4 +265,13 @@ public class DrawPathMovement : MonoBehaviour
     }
 
     public bool GetSingleLine() => SingleLine;
+    public bool GetMoving()
+    {
+        if (anim == null) return false;
+
+        // ambil parameter bool "Moving" langsung dari Animator
+        isMove = anim.GetBool("Moving");
+
+        return isMove;
+    }
 }
