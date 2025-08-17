@@ -125,6 +125,11 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f; // Ensure time is unpaused
     }
 
+    public void BtnNextRound(int scene)
+    {
+        SceneManager.LoadScene(scene, LoadSceneMode.Single);
+    }
+    
     public void BtnExit()
     {
         // Logic to exit the game

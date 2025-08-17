@@ -6,8 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Game.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Menu.unity
+    guid: 6e2e06dbc9f44bd4aa6bc7d1ac4e8f08
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-1.unity
+    guid: 4bccdba9f44375443bcd2bfc3682261c
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-2.unity
+    guid: 69088589f3f2af340b2d785a74e9960f
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-3.unity
+    guid: df33a2d26609b514e8f282697020ba3d
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-4.unity
+    guid: d31c7ab0c5593b745ab5b5edd5179f36
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-5.unity
+    guid: 5935cef110a03cc41a716213da47f3ba
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

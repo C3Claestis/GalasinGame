@@ -113,11 +113,23 @@ public class DrawPathMovement : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 Vector3 point = new Vector3(hit.point.x, 0.5f, hit.point.z); // Y tetap 0.5
-                if (pathPoints.Count == 0 || Vector3.Distance(point, pathPoints[pathPoints.Count - 1]) > 0.05f)
+
+                // if (pathPoints.Count == 0 || Vector3.Distance(point, pathPoints[pathPoints.Count - 1]) > 0.05f)
+                // {
+                //     pathPoints.Add(point);
+                //     lineRenderer.positionCount = pathPoints.Count;
+                //     lineRenderer.SetPosition(pathPoints.Count - 1, point);
+                // }
+
+                // ⬇️ Tambahkan batas maksimal 100 point
+                if (pathPoints.Count < 100)
                 {
-                    pathPoints.Add(point);
-                    lineRenderer.positionCount = pathPoints.Count;
-                    lineRenderer.SetPosition(pathPoints.Count - 1, point);
+                    if (pathPoints.Count == 0 || Vector3.Distance(point, pathPoints[pathPoints.Count - 1]) > 0.05f)
+                    {
+                        pathPoints.Add(point);
+                        lineRenderer.positionCount = pathPoints.Count;
+                        lineRenderer.SetPosition(pathPoints.Count - 1, point);
+                    }
                 }
             }
         }

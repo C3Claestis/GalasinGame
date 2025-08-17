@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -26,12 +28,18 @@ public class MainMenuManager : MonoBehaviour
         panelMode.SetActive(false);
         panelOffender.SetActive(true);
     }
-    
-    public void GoPractice()
-    {
 
+    public void GoScene(int sceneIndex)
+    {
+        StartCoroutine(LoadSceneAfterDelay(sceneIndex, 2f));
     }
-    
+
+    private IEnumerator LoadSceneAfterDelay(int sceneIndex, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sceneIndex);
+    }
+
     public void ExitGame()
     {
         Application.Quit();
