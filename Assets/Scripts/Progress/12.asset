@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: 12
   m_EditorClassIdentifier: 
   title: Langkah Setia Kawan
+  diamondCount: 12
   progress1: 8
   progress2: 11
   progress3: 16
   progress1Index: 8
   progress2Index: 11
   progress3Index: 16
-  isProgress1Complete: 1
-  isProgress2Complete: 1
+  isProgress1Complete: 0
+  isProgress2Complete: 0
   isProgress3Complete: 0

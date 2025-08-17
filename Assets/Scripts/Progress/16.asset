@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: 16
   m_EditorClassIdentifier: 
   title: Rimba Bambu
+  diamondCount: 16
   progress1: 15
   progress2: 9
   progress3: 6
   progress1Index: 15
   progress2Index: 9
   progress3Index: 6
-  isProgress1Complete: 1
+  isProgress1Complete: 0
   isProgress2Complete: 0
-  isProgress3Complete: 1
+  isProgress3Complete: 0

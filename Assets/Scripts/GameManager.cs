@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource audioSourceEnemy;
     [SerializeField] AudioClip movePlayerSFX;
     [SerializeField] AudioClip enemyPlayerSFX;
+    [SerializeField] AudioSource BGM;
+    [SerializeField] AudioSource SFX;
+    [SerializeField] GameObject silangIconMusic;
 
     [Header("UI Elements")]
     [SerializeField] Text defenderTxt;
@@ -54,12 +57,44 @@ public class GameManager : MonoBehaviour
         StartCoroutine(TimerCoroutine());
 
         StartCoroutine(CheckPlayersNameCoroutine());
+
+        // Ambil data dari PlayerPrefs, default = 1 (nyala)
+        float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        BGM.volume = savedVolume;
+        SFX.volume = savedVolume;
+
+        // Update icon sesuai kondisi
+        silangIconMusic.SetActive(BGM.volume == 0);
     }
 
     void Update()
     {
         HandlePlayerMoveSFX();
         HandleEnemyMoveSFX();
+    }
+
+    public void ToggleMusic()
+    {
+        if (BGM.volume > 0)
+        {
+            BGM.volume = 0;
+            SFX.volume = 0;
+            audioSourcePlayer.volume = 0;
+            audioSourceEnemy.volume = 0;
+            silangIconMusic.SetActive(true);
+        }
+        else
+        {
+            BGM.volume = 0.4f;
+            SFX.volume = 1;
+            audioSourcePlayer.volume = 1;
+            audioSourceEnemy.volume = 1;
+            silangIconMusic.SetActive(false);
+        }
+
+        // Simpan ke PlayerPrefs
+        PlayerPrefs.SetFloat("MusicVolume", BGM.volume);
+        PlayerPrefs.Save();
     }
 
     #region Audio Player Move

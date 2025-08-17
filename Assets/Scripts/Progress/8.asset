@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: 8
   m_EditorClassIdentifier: 
   title: Lorong Batik
+  diamondCount: 8
   progress1: 15
   progress2: 2
   progress3: 19
   progress1Index: 15
   progress2Index: 2
   progress3Index: 19
-  isProgress1Complete: 1
-  isProgress2Complete: 1
+  isProgress1Complete: 0
+  isProgress2Complete: 0
   isProgress3Complete: 0

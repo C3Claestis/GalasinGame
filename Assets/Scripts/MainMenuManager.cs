@@ -11,6 +11,21 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject panelAttackBelakangRumah;
     [SerializeField] GameObject panelAttackHutanBelantara;
 
+    [SerializeField] GameObject silangIconMusic;
+    [SerializeField] AudioSource BGM;
+    [SerializeField] AudioSource SFX;
+
+    private void Start()
+    {
+        // Ambil data dari PlayerPrefs, default = 1 (nyala)
+        float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        BGM.volume = savedVolume;
+        SFX.volume = savedVolume;
+
+        // Update icon sesuai kondisi
+        silangIconMusic.SetActive(BGM.volume == 0);
+    }
+
     public void OnPlay()
     {
         panelMenu.SetActive(false);
@@ -44,5 +59,25 @@ public class MainMenuManager : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("Game is exiting...");
+    }
+
+    public void ToggleMusic()
+    {
+        if (BGM.volume > 0)
+        {
+            BGM.volume = 0;
+            SFX.volume = 0;
+            silangIconMusic.SetActive(true);
+        }
+        else
+        {
+            BGM.volume = 0.4f;
+            SFX.volume = 1;
+            silangIconMusic.SetActive(false);
+        }
+
+        // Simpan ke PlayerPrefs
+        PlayerPrefs.SetFloat("MusicVolume", BGM.volume);
+        PlayerPrefs.Save();
     }
 }

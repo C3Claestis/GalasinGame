@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: 3
   m_EditorClassIdentifier: 
   title: Langkah Gotong Royong
+  diamondCount: 3
   progress1: 3
   progress2: 14
   progress3: 18
   progress1Index: 3
   progress2Index: 14
   progress3Index: 18
-  isProgress1Complete: 1
-  isProgress2Complete: 1
+  isProgress1Complete: 0
+  isProgress2Complete: 0
   isProgress3Complete: 0

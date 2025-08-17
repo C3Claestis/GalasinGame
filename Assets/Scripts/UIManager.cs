@@ -73,10 +73,12 @@ public class UIManager : MonoBehaviour
         if (GameManager.Instance.IsAboveTwoMinutes()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought2Menit);
         if (GameManager.Instance.IsAboveThirtySeconds()) ProgressSystem.Instance.CompleteProgressByType(ProgressType.GoThrought30Detik);
 
+        covenantManager.AddDiamondCount();
+
         // Sinkronisasi nilai StarValidasi
         starValidasi.validasi1 = progressManager.isProgress1Complete;
         starValidasi.validasi2 = progressManager.isProgress2Complete;
-        starValidasi.validasi3 = progressManager.isProgress3Complete;
+        starValidasi.validasi3 = progressManager.isProgress3Complete;        
 
         covenantManager.enabled = false;
     }

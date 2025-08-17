@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: 2
   m_EditorClassIdentifier: 
   title: Lari di Tanah Lapang
+  diamondCount: 2
   progress1: 1
   progress2: 8
   progress3: 17
   progress1Index: 1
   progress2Index: 8
   progress3Index: 17
-  isProgress1Complete: 1
-  isProgress2Complete: 1
+  isProgress1Complete: 0
+  isProgress2Complete: 0
   isProgress3Complete: 0

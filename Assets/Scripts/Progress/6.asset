@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: 6
   m_EditorClassIdentifier: 
   title: Riang di Lapangan
+  diamondCount: 6
   progress1: 6
   progress2: 12
   progress3: 16
   progress1Index: 6
   progress2Index: 12
   progress3Index: 16
-  isProgress1Complete: 1
+  isProgress1Complete: 0
   isProgress2Complete: 0
   isProgress3Complete: 0

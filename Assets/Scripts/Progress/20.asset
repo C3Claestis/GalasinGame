@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: 20
   m_EditorClassIdentifier: 
   title: Juara Desa
+  diamondCount: 20
   progress1: 5
   progress2: 19
   progress3: 7
   progress1Index: 5
   progress2Index: 19
   progress3Index: 7
-  isProgress1Complete: 1
+  isProgress1Complete: 0
   isProgress2Complete: 0
-  isProgress3Complete: 1
+  isProgress3Complete: 0

@@ -6,6 +6,9 @@ public class ProgressManager : ScriptableObject
 {
     public string title;
 
+    [Header("Diamond")]
+    public int diamondCount;
+    
     [Header("Progress Conditions (enum = label)")]
     public ProgressType progress1;
     public ProgressType progress2;

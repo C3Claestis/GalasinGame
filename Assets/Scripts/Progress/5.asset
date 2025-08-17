@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: 5
   m_EditorClassIdentifier: 
   title: Pasar Pagi
+  diamondCount: 5
   progress1: 7
   progress2: 11
   progress3: 10
   progress1Index: 7
   progress2Index: 11
   progress3Index: 10
-  isProgress1Complete: 1
-  isProgress2Complete: 1
-  isProgress3Complete: 1
+  isProgress1Complete: 0
+  isProgress2Complete: 0
+  isProgress3Complete: 0

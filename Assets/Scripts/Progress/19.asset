@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 19
   m_EditorClassIdentifier: 
   title: Kampung Bersatu
+  diamondCount: 19
   progress1: 9
   progress2: 18
   progress3: 10
@@ -21,4 +22,4 @@ MonoBehaviour:
   progress3Index: 10
   isProgress1Complete: 0
   isProgress2Complete: 0
-  isProgress3Complete: 1
+  isProgress3Complete: 0

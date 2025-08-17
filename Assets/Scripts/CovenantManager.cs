@@ -18,6 +18,7 @@ public class CovenantManager : MonoBehaviour
     [SerializeField] Text descriptionTxt2;
     [SerializeField] Text descriptionTxt3;
     [SerializeField] Image[] starImage;
+    [SerializeField] Text diamondText;
 
     [Header("Star Sprites")]
     [SerializeField] Sprite filledStar;
@@ -144,10 +145,19 @@ public class CovenantManager : MonoBehaviour
         }
 
         // Initialize progress values
+        diamondText.text = progressManager.diamondCount.ToString();
         titleTxt.text = progressManager.title;
         descriptionTxt1.text = progressManager.GetProgress1Description();
         descriptionTxt2.text = progressManager.GetProgress2Description();
         descriptionTxt3.text = progressManager.GetProgress3Description();
+    }
+
+    public void AddDiamondCount()
+    {
+        int current = PlayerPrefs.GetInt("DiamondCount", 0); // default 0 kalau belum ada
+        int newValue = current + progressManager.diamondCount;
+        PlayerPrefs.SetInt("DiamondCount", newValue);
+        PlayerPrefs.Save(); // opsional biar langsung tersimpan
     }
 
     public void SetCovenant(int Covenant)
