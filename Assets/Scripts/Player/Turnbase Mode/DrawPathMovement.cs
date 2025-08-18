@@ -7,15 +7,13 @@ using UnityEngine.EventSystems; // Tambahkan di atas
 [RequireComponent(typeof(LineRenderer))]
 public class DrawPathMovement : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 5f;
     [SerializeField] DrawPathMovement[] players;
     [SerializeField] Color selectedColor = Color.white;
 
     private bool isSelected = false;
     private bool isDrawing = false;
     private bool canMove = false;
-
-    private AudioSource audioSource; // audio player
+    
     private CinemachineCamera cinemachineCamera;
     private Camera mainCamera;
     private List<Vector3> pathPoints = new List<Vector3>();
@@ -33,6 +31,7 @@ public class DrawPathMovement : MonoBehaviour
     private float firstXpos;
     private bool SingleLine = true;
 
+    private float moveSpeed;
     private bool isMove = false;
 
     void Awake()
@@ -50,10 +49,20 @@ public class DrawPathMovement : MonoBehaviour
         {
             anim = transform.GetComponentInChildren<Animator>();
         }
+
+        switch (PlayerPrefs.GetInt("SpeedLevel", 0))
+        {
+            case 0: moveSpeed = 3f; break;
+            case 1: moveSpeed = 4f; break;
+            case 2: moveSpeed = 5f; break;
+            case 3: moveSpeed = 6f; break;
+            case 4: moveSpeed = 8f; break;
+            default: moveSpeed = 3f; break; // default kecepatan
+        }
     }
 
     void Start()
-    {
+    {        
         rb = GetComponent<Rigidbody>();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
@@ -114,15 +123,21 @@ public class DrawPathMovement : MonoBehaviour
             {
                 Vector3 point = new Vector3(hit.point.x, 0.5f, hit.point.z); // Y tetap 0.5
 
-                // if (pathPoints.Count == 0 || Vector3.Distance(point, pathPoints[pathPoints.Count - 1]) > 0.05f)
-                // {
-                //     pathPoints.Add(point);
-                //     lineRenderer.positionCount = pathPoints.Count;
-                //     lineRenderer.SetPosition(pathPoints.Count - 1, point);
-                // }
+                // 🔽 Tentukan batas maksimal sesuai PlayerPrefs PathLine
+                int pathLineLevel = PlayerPrefs.GetInt("PathLine", 0); // default 0 kalau belum ada
+                int maxLineLength = 100; // default
 
-                // ⬇️ Tambahkan batas maksimal 100 point
-                if (pathPoints.Count < 100)
+                switch (pathLineLevel)
+                {
+                    case 1: maxLineLength = 120; break;
+                    case 2: maxLineLength = 150; break;
+                    case 3: maxLineLength = 170; break;
+                    case 4: maxLineLength = 200; break;
+                    case 5: maxLineLength = 300; break;
+                    default: maxLineLength = 100; break; // default tetap 100
+                }
+
+                if (pathPoints.Count < maxLineLength)
                 {
                     if (pathPoints.Count == 0 || Vector3.Distance(point, pathPoints[pathPoints.Count - 1]) > 0.05f)
                     {

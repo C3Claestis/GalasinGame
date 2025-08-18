@@ -20,6 +20,8 @@ public class Jurang : MonoBehaviour
     private Vector3 startPosPenyerang;
     private Quaternion startRotPenyerang;
 
+    private bool sudahHitungCatch = false;
+
     private void Awake()
     {
         if (objekPenyerang != null)
@@ -32,7 +34,7 @@ public class Jurang : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -45,6 +47,8 @@ public class Jurang : MonoBehaviour
                 penyerangAnimator.SetBool("Run", true);
 
             mulaiKejar = true;
+            sudahTrigger = false; // siap trigger saat sampai
+
             sudahTrigger = false; // siap trigger saat sampai
         }
     }
@@ -62,10 +66,11 @@ public class Jurang : MonoBehaviour
         // Jika sudah dalam jarak < stopDistance, hentikan & trigger sekali
         if (deltaXZ.sqrMagnitude <= stopDistance * stopDistance)
         {
-            if (!sudahTrigger)
+            if (!sudahTrigger && !sudahHitungCatch)
             {
                 sudahTrigger = true;
                 mulaiKejar = false; // berhenti mengikuti
+                sudahHitungCatch = true;
 
                 if (gameManager != null)
                     gameManager.UpdateDefenderCatch(1);
@@ -131,5 +136,6 @@ public class Jurang : MonoBehaviour
         mulaiKejar = false;
         sudahTrigger = false;
         targetPlayer = null;
+        sudahHitungCatch = false;
     }
 }

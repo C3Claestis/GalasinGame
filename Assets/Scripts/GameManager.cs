@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioClip enemyPlayerSFX;
     [SerializeField] AudioSource BGM;
     [SerializeField] AudioSource SFX;
+    [SerializeField] AudioSource SFXSkill1;
+    [SerializeField] AudioSource SFXSkill2;
     [SerializeField] GameObject silangIconMusic;
 
     [Header("UI Elements")]
@@ -60,11 +62,28 @@ public class GameManager : MonoBehaviour
 
         // Ambil data dari PlayerPrefs, default = 1 (nyala)
         float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
-        BGM.volume = savedVolume;
-        SFX.volume = savedVolume;
+
+        if (savedVolume == 0)
+        {
+            BGM.volume = 0;
+            SFX.volume = 0;
+            audioSourcePlayer.volume = 0;
+            audioSourceEnemy.volume = 0;
+            SFXSkill1.volume = 0;
+            SFXSkill2.volume = 0;
+        }
+        else
+        {
+            BGM.volume = 0.4f;
+            SFX.volume = 1;
+            audioSourcePlayer.volume = 1;
+            audioSourceEnemy.volume = 1;
+            SFXSkill1.volume = 1;
+            SFXSkill2.volume = 1;
+        }
 
         // Update icon sesuai kondisi
-        silangIconMusic.SetActive(BGM.volume == 0);
+        silangIconMusic.SetActive(savedVolume == 0);
     }
 
     void Update()
@@ -81,6 +100,8 @@ public class GameManager : MonoBehaviour
             SFX.volume = 0;
             audioSourcePlayer.volume = 0;
             audioSourceEnemy.volume = 0;
+            SFXSkill1.volume = 0;
+            SFXSkill2.volume = 0;
             silangIconMusic.SetActive(true);
         }
         else
@@ -89,6 +110,8 @@ public class GameManager : MonoBehaviour
             SFX.volume = 1;
             audioSourcePlayer.volume = 1;
             audioSourceEnemy.volume = 1;
+            SFXSkill1.volume = 1;
+            SFXSkill2.volume = 1;
             silangIconMusic.SetActive(false);
         }
 
@@ -316,5 +339,4 @@ public class GameManager : MonoBehaviour
     public bool IsAboveOneMinute() => currentTime > 60f;
     public bool IsAboveTwoMinutes() => currentTime > 120f;
     public bool IsAboveThirtySeconds() => currentTime > 30f;
-
 }
