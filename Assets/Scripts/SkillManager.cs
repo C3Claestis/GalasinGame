@@ -1,6 +1,7 @@
 using System.Collections;
-using Unity.VisualScripting;
+using UnityEngine.Rendering.Universal;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class SkillManager : MonoBehaviour
@@ -23,13 +24,17 @@ public class SkillManager : MonoBehaviour
     private DrawPathMovement[] players;
     private GameObject[] vfxObjectsKamuflase;
     private GameObject[] vfxObjectsOutArea;
+    private AudioSource audioSource;
+
+    private GameManager gameManager;
+    private Volume globalVolume;
+
+    [SerializeField] private AudioClip sfxSkillDecreaseCovenant;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        PlayerPrefs.SetInt("KamuflaseLevel", 5);
-        PlayerPrefs.SetInt("OutAreaLevel", 5);
-        PlayerPrefs.SetInt("DecreaseCovenantLevel", 1);
+        audioSource = GetComponent<AudioSource>();       
 
         if (PlayerPrefs.GetInt("KamuflaseLevel") != 0)
         {
@@ -54,6 +59,9 @@ public class SkillManager : MonoBehaviour
             players = FindObjectsByType<DrawPathMovement>(FindObjectsSortMode.None);
         }
 
+        if (gameManager == null) { gameManager = FindFirstObjectByType<GameManager>(); }
+        if (globalVolume == null) { globalVolume = FindFirstObjectByType<Volume>(); }
+
         // ✅ inisialisasi array vfx dengan panjang sama dengan jumlah player
         vfxObjectsKamuflase = new GameObject[players.Length];
         vfxObjectsOutArea = new GameObject[players.Length];
@@ -66,12 +74,6 @@ public class SkillManager : MonoBehaviour
                 vfxObjectsOutArea[i] = players[i].transform.GetChild(2).gameObject;
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     #region Skill Kamuflase
@@ -255,6 +257,107 @@ public class SkillManager : MonoBehaviour
         outAreaCooldownImage.gameObject.SetActive(false);
         if (outAreaSkillWindow != null)
             outAreaSkillWindow.interactable = true;
+    }
+    #endregion
+
+    #region Skill Decrease Covenant
+    public void ActiveDecreaseCovenantSkill()
+    {
+        int level = PlayerPrefs.GetInt("DecreaseCovenantLevel");
+
+        if (level > 0)
+        {
+            int point = 1;
+            decreaseCovenantCooldown = 180f; // default
+
+            switch (level)
+            {
+                case 1:
+                    point = 1;
+                    decreaseCovenantCooldown = 180f;
+                    break;
+                case 2:
+                    point = 1;
+                    decreaseCovenantCooldown = 150f;
+                    break;
+                case 3:
+                    point = 2;
+                    decreaseCovenantCooldown = 120f;
+                    break;
+                case 4:
+                    point = 2;
+                    decreaseCovenantCooldown = 100f;
+                    break;
+                case 5:
+                    point = 3;
+                    decreaseCovenantCooldown = 90f;
+                    break;
+            }
+
+            // Jalankan efek skill + cooldown UI
+            StartCoroutine(DecreaseCovenant(point));
+            StartCoroutine(DecreaseCovenantCooldownRoutine(decreaseCovenantCooldown));
+        }
+
+        IEnumerator DecreaseCovenant(int DecreaseCovenant)
+        {
+            audioSource.PlayOneShot(sfxSkillDecreaseCovenant);
+            gameManager.DecreaseDefenderPoint(DecreaseCovenant);
+
+            // aktifkan efek skill
+            if (globalVolume.profile.TryGet(out Vignette vignette))
+            {
+                float targetIntensity = 0.5f;
+                float speed = 1f; // semakin besar semakin cepat transisinya
+
+                // Naikkan intensity ke 0.5 secara bertahap
+                float t = 0f;
+                while (t < 1f)
+                {
+                    t += Time.deltaTime * speed;
+                    vignette.intensity.value = Mathf.Lerp(0f, targetIntensity, t);
+                    yield return null;
+                }
+
+                // tunggu selama duration (misalnya 3 detik)
+                yield return new WaitForSeconds(3f);
+
+                // Turunkan intensity kembali ke 0 secara bertahap
+                t = 0f;
+                while (t < 1f)
+                {
+                    t += Time.deltaTime * speed;
+                    vignette.intensity.value = Mathf.Lerp(targetIntensity, 0f, t);
+                    yield return null;
+                }
+
+                vignette.intensity.value = 0f; // pastikan reset ke 0
+            }
+        }
+
+        IEnumerator DecreaseCovenantCooldownRoutine(float cooldownTime)
+        {
+            // aktifkan image cooldown
+            decreaseCovenantCooldownImage.gameObject.SetActive(true);
+            decreaseCovenantCooldownImage.fillAmount = 1f;
+
+            // disable tombol
+            if (decreaseCovenantSkillWindow != null)
+                decreaseCovenantSkillWindow.interactable = false;
+
+            float timer = 0f;
+            while (timer < cooldownTime)
+            {
+                timer += Time.deltaTime;
+                decreaseCovenantCooldownImage.fillAmount = 1f - (timer / cooldownTime);
+                yield return null;
+            }
+
+            // selesai cooldown
+            decreaseCovenantCooldownImage.gameObject.SetActive(false);
+            if (decreaseCovenantSkillWindow != null)
+                decreaseCovenantSkillWindow.interactable = true;
+        }
     }
     #endregion
 }

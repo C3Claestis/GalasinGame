@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] AudioSource SFX;
     [SerializeField] AudioSource SFXSkill1;
     [SerializeField] AudioSource SFXSkill2;
+    [SerializeField] AudioSource SFXSkill3;
     [SerializeField] GameObject silangIconMusic;
 
     [Header("UI Elements")]
@@ -239,6 +240,14 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Skor
+    public void DecreaseDefenderPoint(int score)
+    {
+        defenderScore -= score;
+
+        if (defenderScore < 0) defenderScore = 0;
+        defenderTxt.text = $"{defenderScore}";    
+    }
+
     public void UpdateDefenderCatch(int score)
     {
         defenderScore += score;
