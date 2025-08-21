@@ -60,7 +60,17 @@ public class StarDataStruct : MonoBehaviour
     [SerializeField] private List<Image> starIK19;
     [SerializeField] private List<Image> starIK20;
 
+    [Header("Lock Key Image")]
+    [SerializeField] private List<GameObject> lockKey;
+
     private void Start()
+    {
+        InitializeStarHolders();
+        UpdateStars();
+        
+    }
+
+    private void InitializeStarHolders()
     {
         // Masukkan semua starHB ke dalam 1 list
         starHolders.Add(starHB1);
@@ -74,18 +84,38 @@ public class StarDataStruct : MonoBehaviour
         starHolders.Add(starHB9);
         starHolders.Add(starHB10);
 
-        // starHolders.Add(starHB11);
-        // starHolders.Add(starHB12);
-        // starHolders.Add(starHB13);
-        // starHolders.Add(starHB14);
-        // starHolders.Add(starHB15);
-        // starHolders.Add(starHB16);
-        // starHolders.Add(starHB17);
-        // starHolders.Add(starHB18);
-        // starHolders.Add(starHB19);
-        // starHolders.Add(starHB20);
+        starHolders.Add(starHB11);
+        starHolders.Add(starHB12);
+        starHolders.Add(starHB13);
+        starHolders.Add(starHB14);
+        starHolders.Add(starHB15);
+        starHolders.Add(starHB16);
+        starHolders.Add(starHB17);
+        starHolders.Add(starHB18);
+        starHolders.Add(starHB19);
+        starHolders.Add(starHB20);
 
-        UpdateStars();
+        starHolders.Add(starIK1);
+        starHolders.Add(starIK2);
+        starHolders.Add(starIK3);
+        starHolders.Add(starIK4);
+        starHolders.Add(starIK5);
+        starHolders.Add(starIK6);
+        starHolders.Add(starIK7);
+        starHolders.Add(starIK8);
+        starHolders.Add(starIK9);
+        starHolders.Add(starIK10);
+
+        starHolders.Add(starIK11);
+        starHolders.Add(starIK12);
+        starHolders.Add(starIK13);
+        starHolders.Add(starIK14);
+        starHolders.Add(starIK15);
+        starHolders.Add(starIK16);
+        starHolders.Add(starIK17);
+        starHolders.Add(starIK18);
+        starHolders.Add(starIK19);
+        starHolders.Add(starIK20);
     }
 
     private void UpdateStars()
@@ -106,6 +136,30 @@ public class StarDataStruct : MonoBehaviour
         }
     }
 
+    public void SetUpUnlockLevel()
+    {
+        // Ambil level terakhir dari PlayerPrefs, default = 0
+        int level = PlayerPrefs.GetInt("Level", 0);
+
+        // Kunci semua level dulu
+        for (int i = 0; i < lockKey.Count; i++)
+        {
+            lockKey[i].SetActive(true); // aktifkan semua gembok
+            Button parentButton = lockKey[i].GetComponentInParent<Button>();
+            if (parentButton != null)
+                parentButton.interactable = false; // matikan tombol semua dulu
+        }
+
+        // Buka level sesuai progress
+        for (int i = 0; i <= level && i < lockKey.Count; i++)
+        {
+            lockKey[i].SetActive(false); // hilangkan gembok
+            Button parentButton = lockKey[i].GetComponentInParent<Button>();
+            if (parentButton != null)
+                parentButton.interactable = true; // aktifkan tombol
+        }
+    }
+   
     #region On Off Button Site
     public void BtnSiteA()
     {
