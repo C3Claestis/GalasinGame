@@ -7569,7 +7569,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916bdac7efbc31141a1d2544ce04e34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 0
   maxRangeX: 11.5
   minRangeX: -11.5
   maxRangeSodor: 0
@@ -8300,9 +8300,7 @@ MonoBehaviour:
   kamuflaseCooldownImage: {fileID: 716533435}
   outAreaCooldownImage: {fileID: 474177965}
   decreaseCovenantCooldownImage: {fileID: 1342392967}
-  gameManager: {fileID: 1793303320}
   sfxSkillDecreaseCovenant: {fileID: 8300000, guid: 4b4dd7245f6104c8c8eb07ccf6b386ed, type: 3}
-  globalVolume: {fileID: 1968182238}
 --- !u!82 &402915875
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10618,7 +10616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916bdac7efbc31141a1d2544ce04e34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 0
   maxRangeX: 11.5
   minRangeX: -11.5
   maxRangeSodor: 0
@@ -16890,7 +16888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: []
-  selectedColor: {r: 0.7686275, g: 0.34509805, b: 0.10196079, a: 1}
+  selectedColor: {r: 0.039215688, g: 0.909804, b: 0.054901965, a: 1}
 --- !u!54 &819406747
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31269,7 +31267,7 @@ PrefabInstance:
     - target: {fileID: -2843909369972686622, guid: f6db7b8a7bb70b349978a2bfdd3dc6e6, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: d4e0927ea7398314099a642307cf2c3e, type: 2}
+      objectReference: {fileID: 2100000, guid: 625bcd31a7267d74daaa26cc65ce3c0f, type: 2}
     - target: {fileID: -2843909369972686622, guid: f6db7b8a7bb70b349978a2bfdd3dc6e6, type: 3}
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
@@ -42297,7 +42295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 916bdac7efbc31141a1d2544ce04e34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 0
   maxRangeX: 11.5
   minRangeX: -11.5
   maxRangeSodor: 0

@@ -13,7 +13,7 @@ public class DrawPathMovement : MonoBehaviour
     private bool isSelected = false;
     private bool isDrawing = false;
     private bool canMove = false;
-    
+
     private CinemachineCamera cinemachineCamera;
     private Camera mainCamera;
     private List<Vector3> pathPoints = new List<Vector3>();
@@ -34,6 +34,9 @@ public class DrawPathMovement : MonoBehaviour
     private float moveSpeed;
     private bool isMove = false;
 
+    float minSpacing = 0.05f; // jarak minimum antar titik
+    float maxSpacing = 0.1f;  // jarak maksimum antar titik
+    
     void Awake()
     {
         if (cinemachineCamera == null) cinemachineCamera = GameObject.Find("Forward Camera").GetComponent<CinemachineCamera>();
@@ -62,7 +65,7 @@ public class DrawPathMovement : MonoBehaviour
     }
 
     void Start()
-    {        
+    {
         rb = GetComponent<Rigidbody>();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 0;
@@ -90,9 +93,10 @@ public class DrawPathMovement : MonoBehaviour
             MoveAlongPath();
     }
 
+    
+
     void HandleMouseInput()
     {
-        // Cegah raycast jika pointer di atas UI
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             return;
 
@@ -109,7 +113,7 @@ public class DrawPathMovement : MonoBehaviour
                 else if (isSelected)
                 {
                     isDrawing = true;
-                    canMove = false; // Jangan gerak saat menggambar
+                    canMove = false;
                     pathPoints.Clear();
                     lineRenderer.positionCount = 0;
                 }
@@ -121,29 +125,56 @@ public class DrawPathMovement : MonoBehaviour
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Vector3 point = new Vector3(hit.point.x, 0.5f, hit.point.z); // Y tetap 0.5
+                Vector3 point = new Vector3(hit.point.x, 0.5f, hit.point.z);
 
-                // 🔽 Tentukan batas maksimal sesuai PlayerPrefs PathLine
-                int pathLineLevel = PlayerPrefs.GetInt("PathLine", 0); // default 0 kalau belum ada
-                int maxLineLength = 100; // default
-
+                // 🔽 Tentukan batas maksimal jumlah titik dari PlayerPrefs
+                int pathLineLevel = PlayerPrefs.GetInt("PathLineLevel", 0);
+                int maxPoints = 100;
                 switch (pathLineLevel)
                 {
-                    case 1: maxLineLength = 120; break;
-                    case 2: maxLineLength = 150; break;
-                    case 3: maxLineLength = 170; break;
-                    case 4: maxLineLength = 200; break;
-                    case 5: maxLineLength = 300; break;
-                    default: maxLineLength = 100; break; // default tetap 100
+                    case 1: maxPoints = 120; break;
+                    case 2: maxPoints = 150; break;
+                    case 3: maxPoints = 170; break;
+                    case 4: maxPoints = 200; break;
+                    case 5: maxPoints = 300; break;
+                    default: maxPoints = 100; break;
                 }
 
-                if (pathPoints.Count < maxLineLength)
+                if (pathPoints.Count == 0)
                 {
-                    if (pathPoints.Count == 0 || Vector3.Distance(point, pathPoints[pathPoints.Count - 1]) > 0.05f)
+                    pathPoints.Add(point);
+                    lineRenderer.positionCount = 1;
+                    lineRenderer.SetPosition(0, point);
+                }
+                else if (pathPoints.Count < maxPoints)
+                {
+                    Vector3 lastPoint = pathPoints[pathPoints.Count - 1];
+                    float dist = Vector3.Distance(lastPoint, point);
+
+                    if (dist >= minSpacing)
                     {
-                        pathPoints.Add(point);
-                        lineRenderer.positionCount = pathPoints.Count;
-                        lineRenderer.SetPosition(pathPoints.Count - 1, point);
+                        // Kalau lebih jauh dari maxSpacing, tambahkan beberapa titik di antaranya
+                        if (dist > maxSpacing)
+                        {
+                            int steps = Mathf.FloorToInt(dist / maxSpacing);
+                            Vector3 dir = (point - lastPoint).normalized;
+
+                            for (int i = 1; i <= steps; i++)
+                            {
+                                if (pathPoints.Count >= maxPoints) break;
+
+                                Vector3 newPoint = lastPoint + dir * (i * maxSpacing);
+                                pathPoints.Add(newPoint);
+                                lineRenderer.positionCount = pathPoints.Count;
+                                lineRenderer.SetPosition(pathPoints.Count - 1, newPoint);
+                            }
+                        }
+                        else
+                        {
+                            pathPoints.Add(point);
+                            lineRenderer.positionCount = pathPoints.Count;
+                            lineRenderer.SetPosition(pathPoints.Count - 1, point);
+                        }
                     }
                 }
             }
@@ -153,7 +184,7 @@ public class DrawPathMovement : MonoBehaviour
         {
             isDrawing = false;
             currentPointIndex = 0;
-            isSelected = false; // Tidak lagi terpilih setelah selesai menggambar
+            isSelected = false;
             ProgressSystem.Instance.CompleteProgressByType(ProgressType.BerhasilMenggambarLine);
         }
     }
