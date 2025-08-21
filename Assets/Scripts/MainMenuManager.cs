@@ -23,7 +23,7 @@ public class MainMenuManager : MonoBehaviour
         SFX.volume = savedVolume;
 
         // Update icon sesuai kondisi
-        silangIconMusic.SetActive(BGM.volume == 0);
+        silangIconMusic.SetActive(BGM.volume == 0);        
     }
 
     public void OnPlay()

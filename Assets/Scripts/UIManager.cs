@@ -65,6 +65,7 @@ public class UIManager : MonoBehaviour
     {
         // Logic to display completion UI
         gameOverPanel.SetActive(true);
+        PlayerPrefs.SetInt("Level", SceneManager.GetActiveScene().buildIndex);
 
         gameOverText[0].text = "Complete";
         ProgressSystem.Instance.CompleteProgressByType(ProgressType.BerhasilGoThrought);

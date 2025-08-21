@@ -23,6 +23,111 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Hutan Belantara/HB-5.unity
     guid: 5935cef110a03cc41a716213da47f3ba
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-6.unity
+    guid: 2c63bdfbd8a1ce64d9a3a5c86bae6bee
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-7.unity
+    guid: 12071d8f80eb24246af681d897dc8cb5
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-8.unity
+    guid: 9a9fb7bb7c1a0e14b8111b583ecb1afc
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-9.unity
+    guid: 1900973114640644a8859fc926e77907
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-10.unity
+    guid: 14f5d5996662da040ac7e456840fa255
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-11.unity
+    guid: 24ca84eb08d19f94b954308de3635e01
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-12.unity
+    guid: 69017ba36f80c4049887f662d04300f2
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-13.unity
+    guid: 562123ef79c68eb4e9b7cb23d515e6b7
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-14.unity
+    guid: f453971812e764c4a907be7ab5db2191
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-15.unity
+    guid: 895bf65b6069eb941815b802dc260731
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-16.unity
+    guid: e6acff36251f6f246bc5abb71d35422a
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-17.unity
+    guid: 9b628038a0ab3c647be4f1e1bce5f9bc
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-18.unity
+    guid: 519de0315b506ac4f88b70568823a040
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-19.unity
+    guid: c0e6121ac4b29e04ba49d504423ab3a2
+  - enabled: 1
+    path: Assets/Scenes/Hutan Belantara/HB-20.unity
+    guid: b4126e376612d684c8c3828a355e0961
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-1.unity
+    guid: c4e1f8e142a7cbb4db791f5c3ee282a0
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-2.unity
+    guid: 4e4a093a51dbcfd47aa35e95491fe03b
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-3.unity
+    guid: 7cc27074abc031a48ac376b270c7b4ae
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-4.unity
+    guid: 4a9a5146d6502f3409ffac8838826a00
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-5.unity
+    guid: fda3654b4693f6647a52998ae65378d9
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-6.unity
+    guid: 34127156bc7fafb40957f1edc57112f5
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-7.unity
+    guid: 1b8e5cce25434d445ac8ec7ebdfccb6d
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-8.unity
+    guid: 7b5b57f4b20560c4b99e5c4217b0f425
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-9.unity
+    guid: ae0403c340202c14a83fb846d57a5305
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-10.unity
+    guid: 95f6490ada6a847408860f2854539ca0
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-11.unity
+    guid: 76f9671c2644c5b4da38a5816e680ae4
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-12.unity
+    guid: 0f35c2ef74ddf5d4a999240d573328d4
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-13.unity
+    guid: 13dd99f9abe42314aba76313321f4127
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-14.unity
+    guid: 256141b67d3b0ef4ab76b9961b2eb21c
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-15.unity
+    guid: a2d1b5d9c91740740ab073bbd308f45d
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-16.unity
+    guid: deb3e5883438d9645971386643e51d39
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-17.unity
+    guid: 33b407fd666b4ee47bfb84aca43bea24
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-18.unity
+    guid: 971377268539dbe48b454014e2c8f1e2
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-19.unity
+    guid: 1ad548d42982a23418978e5f2b26a852
+  - enabled: 1
+    path: Assets/Scenes/Ibu Kota/IK-20.unity
+    guid: c42c88ac24d86fc42b91c6d33e42433e
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
