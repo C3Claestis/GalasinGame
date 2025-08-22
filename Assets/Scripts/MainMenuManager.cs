@@ -16,7 +16,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] AudioSource SFX;
 
     private void Start()
-    {
+    {        
         // Ambil data dari PlayerPrefs, default = 1 (nyala)
         float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
         BGM.volume = savedVolume;

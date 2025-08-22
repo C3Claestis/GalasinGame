@@ -17,8 +17,8 @@ MonoBehaviour:
   progress1: 7
   progress2: 11
   progress3: 17
-  progress1Index: 0
-  progress2Index: 2
+  progress1Index: 7
+  progress2Index: 11
   progress3Index: 17
   isProgress1Complete: 0
   isProgress2Complete: 0

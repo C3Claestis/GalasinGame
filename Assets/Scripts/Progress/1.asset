@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c299f9481b8ff1a4a877c508db96b96b, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
-  title: Lari di Tanah Lapang
+  title: Awal Permulaan
   diamondCount: 1
   progress1: 0
   progress2: 2

@@ -131,8 +131,11 @@ public class Jurang : MonoBehaviour
 
         // Mulai animasi penyerang
         if (penyerangAnimator != null)
+        {
             penyerangAnimator.SetBool("Attack", false);
-
+            penyerangAnimator.SetBool("Run", false);
+        }
+            
         mulaiKejar = false;
         sudahTrigger = false;
         targetPlayer = null;
